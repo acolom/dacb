@@ -22,5 +22,6 @@ namespace Dacb.CodeAnalysis
             var parser = new Parser(text);
             return parser.Parse();
         }
+        
     }
 }
