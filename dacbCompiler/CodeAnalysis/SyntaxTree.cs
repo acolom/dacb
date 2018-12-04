@@ -11,7 +11,7 @@ namespace Dacb.CodeAnalysis
             Root = root;
             EndOfFileToken = endOfFileToken;
         }
-        blic IReadOnlyList<string> Diagnostics { get; }
+        public IReadOnlyList<string> Diagnostics { get; }
 
         public SyntaxToken EndOfFileToken { get; }
         
