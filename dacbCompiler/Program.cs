@@ -43,7 +43,7 @@ namespace dacbCompiler
                 }
 
                 IReadOnlyList<string> diagnostics = syntaxTree.Diagnostics.Concat(binder.Diagnostics).ToArray();
-                if (!diagnostics.Any())
+                if (diagnostics.Count == 0)
                 {
                     var evaluator = new Evaluator(boundExpression);
                     var result = evaluator.Evaluate();
@@ -52,7 +52,7 @@ namespace dacbCompiler
                 else 
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                    foreach(var diagnostic in syntaxTree.Diagnostics)
+                    foreach(var diagnostic in diagnostics)
                     {
                         Console.WriteLine(diagnostic);
                     }

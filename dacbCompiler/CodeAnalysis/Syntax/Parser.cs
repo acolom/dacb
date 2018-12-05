@@ -93,15 +93,28 @@ namespace Dacb.CodeAnalysis.Syntax
 
         private ExpressionSyntax ParsePrimaryExpression()
         {
-            if (Current.Kind == SyntaxKind.OpenParanthesisToken)
+            switch (Current.Kind)
             {
-                var left = NextToken();
-                var expression = ParseExpression();
-                var righ = MatchToken(SyntaxKind.CloseParanthesisToken);
-                return new ParenthesizedExpressionSyntax(left, expression, righ);
+                case SyntaxKind.OpenParanthesisToken:
+                {
+                    var left = NextToken();
+                    var expression = ParseExpression();
+                    var righ = MatchToken(SyntaxKind.CloseParanthesisToken);
+                    return new ParenthesizedExpressionSyntax(left, expression, righ);
+                }
+                case SyntaxKind.TrueKeyword:
+                case SyntaxKind.FalseKeyword:
+                {
+                    var keywordToken = NextToken();
+                    var value = Current.Kind == SyntaxKind.TrueKeyword;
+                    return new LiteralExpressionSyntax(Current, value);
+                }
+                default: 
+                {
+                    var numberToken = MatchToken(SyntaxKind.NumberToken);
+                    return new LiteralExpressionSyntax(numberToken);
+                }
             }
-            var numberToken = MatchToken(SyntaxKind.NumberToken);
-            return new LiteralExpressionSyntax(numberToken);
         }
     }
 }

@@ -13,23 +13,21 @@ namespace Dacb.CodeAnalysis
             _root = root;
         }
 
-        
-
-        public int Evaluate()
+        public object Evaluate()
         {
             return EvaluateExression(_root);
         }
 
-        private int EvaluateExression(BoundExpression node)
+        private object EvaluateExression(BoundExpression node)
         {
             if (node is BoundLiteralExpression n)
             {
-                return (int)n.Value;
+                return n.Value;
             }
                 
             if (node is BoundUnaryExpression u)
             {
-                var operand = EvaluateExression(u.Operand);
+                var operand = (int) EvaluateExression(u.Operand);
                 switch (u.OperatorKind)
                 {
                     case BoundUnaryOperatorKind.Negation:
@@ -43,8 +41,8 @@ namespace Dacb.CodeAnalysis
             }
             if (node is BoundBinaryExpression b)
             {
-                var left = EvaluateExression(b.Left);
-                var right = EvaluateExression(b.Right);
+                var left = (int) EvaluateExression(b.Left);
+                var right = (int) EvaluateExression(b.Right);
                 switch (b.OperatorKind)
                 {
                     case BoundBinaryOperatorKind.Addition:

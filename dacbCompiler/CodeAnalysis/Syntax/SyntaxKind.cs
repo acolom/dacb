@@ -13,12 +13,20 @@ namespace Dacb.CodeAnalysis.Syntax
         OpenParanthesisToken,
         CloseParanthesisToken,
         WhitespaceToken,
+        IdentifierToken,
+
+        //keywords
+
+        TrueKeyword,
+        FalseKeyword,
+
 
         //Expressions     
         LiteralExpression,
         UnaryExpression,
         BinaryExpression,
         ParenthesizedExpression,
+        
         
     }
 }
