@@ -4,21 +4,16 @@ namespace Dacb.CodeAnalysis.Binding
 {
     internal sealed class BoundUnaryExpression : BoundExpression 
     {
-        public BoundUnaryExpression()
+        public BoundUnaryExpression(BoundUnaryOperator op, BoundExpression operand)
         {
-        }
-
-        public BoundUnaryExpression(BoundUnaryOperatorKind operatorKind, BoundExpression operand)
-        {
-            OperatorKind = operatorKind;
+            Op = op;
             Operand = operand;
         }
 
         public override BoundNodeKind Kind => BoundNodeKind.UnaryExpression;
-        public BoundUnaryOperatorKind OperatorKind { get; }
-        public BoundExpression Operand { get; }
-
         public override Type Type => Operand.Type;
+        public BoundUnaryOperator Op { get; }
+        public BoundExpression Operand { get; }
     }
     
 }

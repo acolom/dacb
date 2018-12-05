@@ -28,7 +28,7 @@ namespace Dacb.CodeAnalysis
             if (node is BoundUnaryExpression u)
             {
                 var operand = EvaluateExression(u.Operand);
-                switch (u.OperatorKind)
+                switch (u.Op.Kind)
                 {
                     case BoundUnaryOperatorKind.Identity:
                         return  (int)operand;
@@ -38,7 +38,7 @@ namespace Dacb.CodeAnalysis
                         return !(bool)operand;
                     
                     default:
-                        throw new Exception($"Unexpected unary operator '{u.OperatorKind}'");
+                        throw new Exception($"Unexpected unary operator '{u.Op}'");
                 }
 
             }
@@ -46,7 +46,7 @@ namespace Dacb.CodeAnalysis
             {
                 var left =  EvaluateExression(b.Left);
                 var right = EvaluateExression(b.Right);
-                switch (b.OperatorKind)
+                switch (b.Op.Kind)
                 {
                     case BoundBinaryOperatorKind.Addition:
                         return (int)left + (int)right;
@@ -61,7 +61,7 @@ namespace Dacb.CodeAnalysis
                     case BoundBinaryOperatorKind.LogicalOr:
                         return (bool)left || (bool)right;
                     default:
-                        throw new Exception($"Unexpected operator: {b.OperatorKind}");
+                        throw new Exception($"Unexpected operator: {b.Op.Kind}");
                 }
             }
             throw new Exception($"Unexpected node: {node.Kind}");

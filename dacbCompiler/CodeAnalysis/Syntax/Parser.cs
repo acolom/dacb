@@ -105,7 +105,6 @@ namespace Dacb.CodeAnalysis.Syntax
                 case SyntaxKind.TrueKeyword:
                 case SyntaxKind.FalseKeyword:
                 {
-                    
                     var keywordToken = NextToken();
                     var value = keywordToken.Kind == SyntaxKind.TrueKeyword;
                     return new LiteralExpressionSyntax(Current, value);
