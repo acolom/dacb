@@ -6,12 +6,11 @@ using Dacb.CodeAnalysis;
 namespace dacbCompiler
 {
     //status --> Epsiode 01 --> 1:00:55
-    class Program
+    internal class Program
     {
-        
-        static void Main(string[] args)
+        private static void Main()
         {
-            bool showTree = false;
+            var showTree = false;
             while(true)
             {
                 Console.Write("> ");
@@ -64,7 +63,7 @@ namespace dacbCompiler
             // │
             // └──
 
-            var marker = isLast ? "└───" : "├───";
+            var marker = isLast ? "└──" : "├──";
             Console.Write(indent);
             Console.Write(marker);
             Console.Write(node.Kind);
@@ -75,7 +74,7 @@ namespace dacbCompiler
             }
             Console.WriteLine();
             
-            indent += isLast ? "    " : "│   ";
+            indent += isLast ? "   " : "│  ";
             
             var lastChild = node.GetChildren().LastOrDefault();
             foreach(var child in node.GetChildren())

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Dacb.CodeAnalysis
 {
-    sealed class SyntaxTree
+    public sealed class SyntaxTree
     {
         public SyntaxTree(IEnumerable<string> diagnostics, ExpressionSyntax root, SyntaxToken endOfFileToken)
         {
@@ -22,6 +22,5 @@ namespace Dacb.CodeAnalysis
             var parser = new Parser(text);
             return parser.Parse();
         }
-        
     }
 }

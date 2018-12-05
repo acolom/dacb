@@ -1,18 +1,20 @@
 namespace Dacb.CodeAnalysis
 {
-    enum SyntaxKind 
+    public enum SyntaxKind 
     {
+        //tokens
+        BadToken,
+        EndOfFileToken,
         NumberToken,
-        WhitespaceToken,
         PlusToken,
         MinusToken,
         StarToken,
         SlashToken,
         OpenParanthesisToken,
         CloseParanthesisToken,
-        DivideToken,
-        BadToken,
-        EndOfFileToken,
+        WhitespaceToken,
+
+        //Expressions     
         NumberExpression,
         BinaryExpression,
         ParenthesizedExpression

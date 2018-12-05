@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Dacb.CodeAnalysis
 {
-    sealed class NumberExpressionSyntax : ExpressionSyntax 
+    public sealed class NumberExpressionSyntax : ExpressionSyntax 
     {
         public NumberExpressionSyntax(SyntaxToken numberToken)
         { 

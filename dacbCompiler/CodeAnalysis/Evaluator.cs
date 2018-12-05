@@ -2,7 +2,7 @@
 
 namespace Dacb.CodeAnalysis
 {
-    class Evaluator
+    public sealed class Evaluator
     {
         public Evaluator(ExpressionSyntax root)
         {

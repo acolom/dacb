@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Dacb.CodeAnalysis
 {
-    class Parser
+    internal sealed class Parser
     {
         private readonly SyntaxToken[] _tokens;
         private List<string> _diagnostics = new List<string>();
@@ -30,7 +30,6 @@ namespace Dacb.CodeAnalysis
             _tokens = tokens.ToArray();
         }
         private SyntaxToken Current => Peek(0);
-        
         public IEnumerable<string> Diagnostics => _diagnostics;
         private SyntaxToken Peek(int offset)
         {
@@ -40,15 +39,13 @@ namespace Dacb.CodeAnalysis
             
             return _tokens[index];
         }
-
         private SyntaxToken NextToken() 
         {
             var current = Current;
             _position++;
             return current;
         }
-
-        private SyntaxToken Match(SyntaxKind kind) 
+        private SyntaxToken MatchToken(SyntaxKind kind) 
         {
             if (Current.Kind == kind)
                 return NextToken();
@@ -56,11 +53,10 @@ namespace Dacb.CodeAnalysis
             _diagnostics.Add($"ERROR: Unexpected token <{Current.Kind}>, expected <{kind}>");
             return new SyntaxToken(kind, Current.Position, null, null);
         }
-
         public SyntaxTree Parse()
         {
-            var expression = ParseTerm();
-            var eofToken = Match(SyntaxKind.EndOfFileToken);
+            var expression = ParseExpression();
+            var eofToken = MatchToken(SyntaxKind.EndOfFileToken);
             return new SyntaxTree(this.Diagnostics, expression, eofToken);
         }
 
@@ -68,8 +64,6 @@ namespace Dacb.CodeAnalysis
         {
             return ParseTerm();
         }
-
-
         public ExpressionSyntax ParseTerm()
         {
             var left = ParseFactor();
@@ -80,7 +74,6 @@ namespace Dacb.CodeAnalysis
                 var right = ParseFactor();
                 left = new BinaryExpressionSyntax(left, operatorKind, right);
             }
-
             return left;
         }
 
@@ -88,7 +81,7 @@ namespace Dacb.CodeAnalysis
         {
             var left = ParsePrimaryExpression();
             while(Current.Kind == SyntaxKind.StarToken ||
-                  Current.Kind == SyntaxKind.DivideToken )
+                  Current.Kind == SyntaxKind.SlashToken )
             {
                 var operatorKind = NextToken();
                 var right = ParsePrimaryExpression();
@@ -97,17 +90,16 @@ namespace Dacb.CodeAnalysis
 
             return left;
         }
-
         private ExpressionSyntax ParsePrimaryExpression()
         {
             if (Current.Kind == SyntaxKind.OpenParanthesisToken)
             {
                 var left = NextToken();
                 var expression = ParseExpression();
-                var righ = Match(SyntaxKind.CloseParanthesisToken);
+                var righ = MatchToken(SyntaxKind.CloseParanthesisToken);
                 return new ParenthesizedExpressionSyntax(left, expression, righ);
             }
-            var numberToken = Match(SyntaxKind.NumberToken);
+            var numberToken = MatchToken(SyntaxKind.NumberToken);
             return new NumberExpressionSyntax(numberToken);
         }
     }
