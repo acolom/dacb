@@ -18,7 +18,8 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/dacbCompiler/dacbCompiler.cspro"
+                "${workspaceFolder}/dacbCompiler/dacbCompiler.csproj",
+                "/p:Platform=\"\""
             ],
             "problemMatcher": "$msCompile"
         }
