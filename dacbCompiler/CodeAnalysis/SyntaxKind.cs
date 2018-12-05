@@ -16,7 +16,9 @@ namespace Dacb.CodeAnalysis
 
         //Expressions     
         LiteralExpression,
+        UnaryExpression,
         BinaryExpression,
-        ParenthesizedExpression
+        ParenthesizedExpression,
+        
     }
 }
