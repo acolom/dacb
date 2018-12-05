@@ -27,13 +27,16 @@ namespace Dacb.CodeAnalysis
                 
             if (node is BoundUnaryExpression u)
             {
-                var operand = (int) EvaluateExression(u.Operand);
+                var operand = EvaluateExression(u.Operand);
                 switch (u.OperatorKind)
                 {
-                    case BoundUnaryOperatorKind.Negation:
-                        return -operand;
                     case BoundUnaryOperatorKind.Identity:
-                        return operand;
+                        return  (int)operand;
+                    case BoundUnaryOperatorKind.Negation:
+                        return -(int)operand;
+                    case BoundUnaryOperatorKind.LogicalNegation:
+                        return !(bool)operand;
+                    
                     default:
                         throw new Exception($"Unexpected unary operator '{u.OperatorKind}'");
                 }
@@ -41,18 +44,22 @@ namespace Dacb.CodeAnalysis
             }
             if (node is BoundBinaryExpression b)
             {
-                var left = (int) EvaluateExression(b.Left);
-                var right = (int) EvaluateExression(b.Right);
+                var left =  EvaluateExression(b.Left);
+                var right = EvaluateExression(b.Right);
                 switch (b.OperatorKind)
                 {
                     case BoundBinaryOperatorKind.Addition:
-                        return left + right;
+                        return (int)left + (int)right;
                     case BoundBinaryOperatorKind.Substraction:
-                        return left - right;
+                        return (int)left - (int)right;
                     case BoundBinaryOperatorKind.Multiplication:
-                        return left * right;
+                        return (int)left * (int)right;
                     case BoundBinaryOperatorKind.Division:
-                        return left / right;
+                        return (int)left / (int)right;
+                    case BoundBinaryOperatorKind.LogicalAnd:
+                        return (bool)left && (bool)right;
+                    case BoundBinaryOperatorKind.LogicalOr:
+                        return (bool)left || (bool)right;
                     default:
                         throw new Exception($"Unexpected operator: {b.OperatorKind}");
                 }

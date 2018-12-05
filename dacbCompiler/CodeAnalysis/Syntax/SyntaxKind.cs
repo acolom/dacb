@@ -14,9 +14,11 @@ namespace Dacb.CodeAnalysis.Syntax
         CloseParanthesisToken,
         WhitespaceToken,
         IdentifierToken,
+        BangToken,
+        AmpsersandAmpsersandToken,
+        PipePipeToken,
 
         //keywords
-
         TrueKeyword,
         FalseKeyword,
 
@@ -26,7 +28,6 @@ namespace Dacb.CodeAnalysis.Syntax
         UnaryExpression,
         BinaryExpression,
         ParenthesizedExpression,
-        
         
     }
 }
