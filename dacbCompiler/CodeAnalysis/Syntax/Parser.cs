@@ -12,6 +12,7 @@ namespace Dacb.CodeAnalysis.Syntax
         public Parser(string text)
         {
             var tokens = new List<SyntaxToken>();
+            
             var lexer = new Lexer(text);
             SyntaxToken token;
 
@@ -30,8 +31,8 @@ namespace Dacb.CodeAnalysis.Syntax
             _diagnostics.AddRange(lexer.Diagnostics);
             _tokens = tokens.ToArray();
         }
-        private SyntaxToken Current => Peek(0);
         public IEnumerable<string> Diagnostics => _diagnostics;
+
         private SyntaxToken Peek(int offset)
         {
             var index = _position + offset;
@@ -40,6 +41,9 @@ namespace Dacb.CodeAnalysis.Syntax
             
             return _tokens[index];
         }
+
+        private SyntaxToken Current => Peek(0);
+        
         private SyntaxToken NextToken() 
         {
             var current = Current;
@@ -62,35 +66,35 @@ namespace Dacb.CodeAnalysis.Syntax
             var eofToken = MatchToken(SyntaxKind.EndOfFileToken);
             return new SyntaxTree(this.Diagnostics, expression, eofToken);
         }
-
-        public ExpressionSyntax ParseExpression(int parentPrecedence = 0)
+ 
+        private ExpressionSyntax ParseExpression(int parentPrecedence = 0)
         {
             ExpressionSyntax left;
             var unaryOperatorPrecedence = Current.Kind.GetUnaryOperatorPrecedence();
-
             if (unaryOperatorPrecedence != 0 && unaryOperatorPrecedence >= parentPrecedence)
             {
                 var operatorToken = NextToken();
                 var operand = ParseExpression(unaryOperatorPrecedence);
                 left = new UnaryExpressionSyntax(operatorToken, operand);
             }
-            else 
+            else
             {
                 left = ParsePrimaryExpression();
             }
 
-            while(true)
+            while (true)
             {
                 var precedence = Current.Kind.GetBinaryOperatorPrecedence();
                 if (precedence == 0 || precedence <= parentPrecedence)
                     break;
-                var operatorToken =  NextToken();
+
+                var operatorToken = NextToken();
                 var right = ParseExpression(precedence);
-                return new BinaryExpressionSyntax(left, operatorToken, right);
+                left = new BinaryExpressionSyntax(left, operatorToken, right);
             }
+
             return left;
         }
-
         private ExpressionSyntax ParsePrimaryExpression()
         {
             switch (Current.Kind)
@@ -107,7 +111,7 @@ namespace Dacb.CodeAnalysis.Syntax
                 {
                     var keywordToken = NextToken();
                     var value = keywordToken.Kind == SyntaxKind.TrueKeyword;
-                    return new LiteralExpressionSyntax(Current, value);
+                    return new LiteralExpressionSyntax(keywordToken, value);
                 }
                 default: 
                 {

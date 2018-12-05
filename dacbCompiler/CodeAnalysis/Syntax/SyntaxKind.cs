@@ -15,6 +15,8 @@ namespace Dacb.CodeAnalysis.Syntax
         WhitespaceToken,
         IdentifierToken,
         BangToken,
+        EqualsEqualsToken,
+        BangEqualsToken,
         AmpsersandAmpsersandToken,
         PipePipeToken,
 
