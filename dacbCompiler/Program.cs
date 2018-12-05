@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dacb.CodeAnalysis;
+using Dacb.CodeAnalysis.Syntax;
 
 namespace dacbCompiler
 {

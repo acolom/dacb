@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Dacb.CodeAnalysis
+namespace Dacb.CodeAnalysis.Syntax
 {
     public sealed class SyntaxTree
     {

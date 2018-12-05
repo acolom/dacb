@@ -1,4 +1,4 @@
-namespace Dacb.CodeAnalysis
+namespace Dacb.CodeAnalysis.Syntax
 {
     public enum SyntaxKind 
     {
