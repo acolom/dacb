@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dacb.CodeAnalysis;
+using Dacb.CodeAnalysis.Binding;
 using Dacb.CodeAnalysis.Syntax;
 
 namespace dacbCompiler
@@ -32,17 +33,19 @@ namespace dacbCompiler
                 }
                     	
                 var syntaxTree = SyntaxTree.Parse(line);
-
+                var binder = new Binder();
+                var boundExpression = binder.BindExpression(syntaxTree.Root);
                 if (showTree)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;                
                     PrettyPrint(syntaxTree.Root);
                     Console.ResetColor();
                 }
-                
-                if (!syntaxTree.Diagnostics.Any())
+
+                IReadOnlyList<string> diagnostics = syntaxTree.Diagnostics.Concat(binder.Diagnostics).ToArray();
+                if (!diagnostics.Any())
                 {
-                    var evaluator = new Evaluator(syntaxTree.Root);
+                    var evaluator = new Evaluator(boundExpression);
                     var result = evaluator.Evaluate();
                     Console.WriteLine(result);
                 }
