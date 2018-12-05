@@ -15,7 +15,7 @@ namespace Dacb.CodeAnalysis
         WhitespaceToken,
 
         //Expressions     
-        NumberExpression,
+        LiteralExpression,
         BinaryExpression,
         ParenthesizedExpression
     }

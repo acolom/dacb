@@ -100,7 +100,7 @@ namespace Dacb.CodeAnalysis
                 return new ParenthesizedExpressionSyntax(left, expression, righ);
             }
             var numberToken = MatchToken(SyntaxKind.NumberToken);
-            return new NumberExpressionSyntax(numberToken);
+            return new LiteralExpressionSyntax(numberToken);
         }
     }
 }
