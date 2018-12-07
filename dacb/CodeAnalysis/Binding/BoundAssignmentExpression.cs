@@ -4,18 +4,15 @@ namespace Dacb.CodeAnalysis.Binding
 {
     internal sealed class BoundAssignmentExpression : BoundExpression
     {
-
-        public BoundAssignmentExpression(string name, BoundExpression expresion)
+        public BoundAssignmentExpression(VariableSymbol variable, BoundExpression expresion)
         {
-            Name = name;
+            Variable = variable;
             Expresion = expresion;
         }
-
-        public string Name { get; }
+        
+        public VariableSymbol Variable { get; }
         public BoundExpression Expresion { get; }
-
         public override Type Type => Expresion.Type;
-
         public override BoundNodeKind Kind => BoundNodeKind.AssignmentExpression;
     }
 }
