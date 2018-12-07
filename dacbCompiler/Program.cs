@@ -60,7 +60,7 @@ namespace dacbCompiler
                         Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.WriteLine(diagnostic);
                         Console.ResetColor();
-
+ 
                         var prefix = line.Substring(0, diagnostic.Span.Start);
                         var error = line.Substring(diagnostic.Span.Start, diagnostic.Span.Length);
                         var suffix = line.Substring(diagnostic.Span.End);
