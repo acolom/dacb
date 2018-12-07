@@ -1,4 +1,4 @@
-# DACB --> Diago, Adrian Colom Beltran
+# DACB --> Diego, Adrian Colom Beltran
 
 > Compiler for fun purposes
 
