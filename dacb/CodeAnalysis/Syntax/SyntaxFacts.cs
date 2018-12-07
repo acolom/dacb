@@ -2,7 +2,7 @@ using System;
 
 namespace Dacb.CodeAnalysis.Syntax
 {
-    internal static class SyntaxFacts 
+    public static class SyntaxFacts 
     {
         public static int GetUnaryOperatorPrecedence(this SyntaxKind kind)
         {
@@ -48,6 +48,43 @@ namespace Dacb.CodeAnalysis.Syntax
                     return SyntaxKind.FalseKeyword;
                 default:
                     return SyntaxKind.IdentifierToken;
+            }
+        }
+
+        public static string GetTextFor(SyntaxKind kind)
+        {
+            switch(kind)
+            {
+                case SyntaxKind.PlusToken: 
+                    return  "+";
+                case SyntaxKind.MinusToken: 
+                    return  "-";
+                case SyntaxKind.StarToken: 
+                    return  "*";
+                case SyntaxKind.SlashToken: 
+                    return  "/";
+                case SyntaxKind.BangToken: 
+                    return  "!";
+                case SyntaxKind.EqualsToken: 
+                    return  "=";
+                case SyntaxKind.AmpsersandAmpsersandToken: 
+                    return  "&&";
+                case SyntaxKind.PipePipeToken: 
+                    return  "||";
+                case SyntaxKind.EqualsEqualsToken: 
+                    return  "==";
+                case SyntaxKind.BangEqualsToken: 
+                    return  "!=";
+                case SyntaxKind.OpenParanthesisToken: 
+                    return  "(";
+                case SyntaxKind.CloseParanthesisToken: 
+                    return  ")";
+                case SyntaxKind.TrueKeyword:
+                    return  "true";
+                case SyntaxKind.FalseKeyword:
+                    return  "false";
+                default:
+                    return null;
             }
         }
     }
