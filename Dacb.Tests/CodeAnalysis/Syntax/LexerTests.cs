@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Dacb.Tests.CodeAnalysis.Syntax
 {
-    public class LexerTest
+    public class LexerTests
     {
         [Theory]
         [MemberData(nameof(GetTokensData))]
@@ -27,7 +27,6 @@ namespace Dacb.Tests.CodeAnalysis.Syntax
             var tokens = SyntaxTree.ParseTokens($"{t1Text}{t2Text}").ToArray();
 
             Assert.Equal(2, tokens.Length);
-
             
             Assert.Equal(tokens[0].Kind, t1Kind);
             Assert.Equal(tokens[0].Text, t1Text);
