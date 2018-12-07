@@ -5,21 +5,21 @@ namespace Dacb.CodeAnalysis.Syntax
         //tokens
         BadToken,
         EndOfFileToken,
+        WhitespaceToken,
         NumberToken,
         PlusToken,
         MinusToken,
         StarToken,
         SlashToken,
-        OpenParanthesisToken,
-        CloseParanthesisToken,
-        WhitespaceToken,
-        IdentifierToken,
         BangToken,
-        EqualsEqualsToken,
-        BangEqualsToken,
+        EqualsToken,
         AmpsersandAmpsersandToken,
         PipePipeToken,
-
+        EqualsEqualsToken,
+        BangEqualsToken,
+        OpenParanthesisToken,
+        CloseParanthesisToken,
+        IdentifierToken,
         //keywords
         TrueKeyword,
         FalseKeyword,
@@ -27,9 +27,11 @@ namespace Dacb.CodeAnalysis.Syntax
 
         //Expressions     
         LiteralExpression,
+        NameExpression,
         UnaryExpression,
         BinaryExpression,
         ParenthesizedExpression,
+        AssignmentExpression,
         
     }
 }

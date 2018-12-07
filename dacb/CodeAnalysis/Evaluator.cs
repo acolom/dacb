@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Dacb.CodeAnalysis.Binding;
 
 namespace Dacb.CodeAnalysis
@@ -7,10 +8,12 @@ namespace Dacb.CodeAnalysis
     internal sealed class Evaluator
     {
         private readonly BoundExpression _root;
+        private readonly Dictionary<string, object> _variables;
 
-        public Evaluator(BoundExpression root)
+        public Evaluator(BoundExpression root, Dictionary<string, object> variables)
         {
             _root = root;
+            _variables = variables;
         }
 
         public object Evaluate()
@@ -24,7 +27,21 @@ namespace Dacb.CodeAnalysis
             {
                 return n.Value;
             }
-                
+
+            if (node is BoundVariableExpression v)
+            {
+                return _variables[v.Name];
+            }
+
+            
+            if (node is BoundAssignmentExpression a)
+            {
+                var value = EvaluateExression(a.Expresion);
+                _variables[a.Name] = value;
+                return value;
+            }
+
+
             if (node is BoundUnaryExpression u)
             {
                 var operand = EvaluateExression(u.Operand);

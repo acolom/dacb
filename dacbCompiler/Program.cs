@@ -13,6 +13,7 @@ namespace dacbCompiler
         private static void Main()
         {
             var showTree = false;
+            var variables = new Dictionary<string,object>();
             while(true)
             {
                 Console.Write("> ");
@@ -34,7 +35,7 @@ namespace dacbCompiler
                     	
                 var syntaxTree = SyntaxTree.Parse(line);
                 var compilation = new Compilation(syntaxTree);
-                var result = compilation.Evaluate();
+                var result = compilation.Evaluate(variables);
                 
                 IReadOnlyList<Diagnostic> diagnostics = result.Diagnostics;
 
