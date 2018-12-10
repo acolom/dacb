@@ -9,7 +9,7 @@ namespace Dacb.Tests.CodeAnalysis.Syntax
     {
         [Theory]
         [MemberData(nameof(GetSyntaxKindData))]
-        public void Syntax_Facts_RoundTrips(SyntaxKind kind) 
+        public void SyntaxFacts_RoundTrips(SyntaxKind kind) 
         {
             var text = SyntaxFacts.GetTextFor(kind);
             if (text == null)
