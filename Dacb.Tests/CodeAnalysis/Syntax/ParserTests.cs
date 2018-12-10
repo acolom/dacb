@@ -12,8 +12,8 @@ namespace Dacb.Tests.CodeAnalysis.Syntax
         {
             var op1Precedence = SyntaxFacts.GetBinaryOperatorPrecedence(op1);
             var op2Precedence = SyntaxFacts.GetBinaryOperatorPrecedence(op2);
-            var op1Text = SyntaxFacts.GetTextFor(op1);
-            var op2Text = SyntaxFacts.GetTextFor(op2);
+            var op1Text = SyntaxFacts.GetText(op1);
+            var op2Text = SyntaxFacts.GetText(op2);
 
             
             var text = $"a {op1Text} b {op2Text} c";
@@ -70,8 +70,8 @@ namespace Dacb.Tests.CodeAnalysis.Syntax
         {
             var unaryPrecedence = SyntaxFacts.GetUnaryOperatorPrecedence(unaryKind);
             var binaryPrecedence = SyntaxFacts.GetBinaryOperatorPrecedence(binaryKind);
-            var unaryText = SyntaxFacts.GetTextFor(unaryKind);
-            var binaryText = SyntaxFacts.GetTextFor(binaryKind);
+            var unaryText = SyntaxFacts.GetText(unaryKind);
+            var binaryText = SyntaxFacts.GetText(binaryKind);
 
             
             var text = $"{unaryText}a {binaryText} b";

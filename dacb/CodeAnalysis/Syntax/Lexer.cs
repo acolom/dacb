@@ -147,7 +147,7 @@ namespace Dacb.CodeAnalysis.Syntax
             
             
             var length = _position - _start;
-            var text = SyntaxFacts.GetTextFor(_kind);
+            var text = SyntaxFacts.GetText(_kind);
             if (text == null)
                 text = _text.Substring(_start, length);
             return new SyntaxToken(_kind, _start, text, _value);
