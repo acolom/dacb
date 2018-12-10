@@ -15,3 +15,9 @@ steps:
   displayName: 'dotnet build $(buildConfiguration)'
 - script: dotnet test $(tests)
   displayName: 'dotnet test $(tests)'
+- task: PublishTestResults@2
+  displayName: 'publish test results to azure pipelines'
+  inputs:
+    testResultsFormat: 'xUnit'
+    testResultsFiles: '**/TestResults.xml'
+  condition: always()
