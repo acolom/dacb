@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dacbCompiler", "dacbCompile
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dacb.Tests", "Dacb.Tests\Dacb.Tests.csproj", "{1A2115B6-967C-4AA7-B551-23629EF9CBE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dacb", "dacb\dacb.csproj", "{38109363-3EF0-49FA-B4DD-4A521D2ED32D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{1A2115B6-967C-4AA7-B551-23629EF9CBE2}.Release|x64.Build.0 = Release|Any CPU
 		{1A2115B6-967C-4AA7-B551-23629EF9CBE2}.Release|x86.ActiveCfg = Release|Any CPU
 		{1A2115B6-967C-4AA7-B551-23629EF9CBE2}.Release|x86.Build.0 = Release|Any CPU
+		{38109363-3EF0-49FA-B4DD-4A521D2ED32D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38109363-3EF0-49FA-B4DD-4A521D2ED32D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38109363-3EF0-49FA-B4DD-4A521D2ED32D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{38109363-3EF0-49FA-B4DD-4A521D2ED32D}.Debug|x64.Build.0 = Debug|Any CPU
+		{38109363-3EF0-49FA-B4DD-4A521D2ED32D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{38109363-3EF0-49FA-B4DD-4A521D2ED32D}.Debug|x86.Build.0 = Debug|Any CPU
+		{38109363-3EF0-49FA-B4DD-4A521D2ED32D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38109363-3EF0-49FA-B4DD-4A521D2ED32D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38109363-3EF0-49FA-B4DD-4A521D2ED32D}.Release|x64.ActiveCfg = Release|Any CPU
+		{38109363-3EF0-49FA-B4DD-4A521D2ED32D}.Release|x64.Build.0 = Release|Any CPU
+		{38109363-3EF0-49FA-B4DD-4A521D2ED32D}.Release|x86.ActiveCfg = Release|Any CPU
+		{38109363-3EF0-49FA-B4DD-4A521D2ED32D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
