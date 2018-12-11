@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using Dacb.CodeAnalysis.Text;
 
 namespace Dacb.CodeAnalysis.Syntax
 {
@@ -10,7 +11,7 @@ namespace Dacb.CodeAnalysis.Syntax
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
         private int _position;
 
-        public Parser(string text)
+        public Parser(SourceText text)
         {
             var tokens = new List<SyntaxToken>();
 

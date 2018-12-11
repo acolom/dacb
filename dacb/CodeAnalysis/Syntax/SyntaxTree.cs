@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using Dacb.CodeAnalysis.Text;
 
 namespace Dacb.CodeAnalysis.Syntax
 {
@@ -18,13 +19,19 @@ namespace Dacb.CodeAnalysis.Syntax
         
         public ExpressionSyntax Root { get; }
         
-        public static SyntaxTree Parse(string text)
+        public static SyntaxTree Parse(SourceText text)
         {
             var parser = new Parser(text);
             return parser.Parse();
         }
 
-        public static IEnumerable<SyntaxToken> ParseTokens(string text)
+        public static SyntaxTree Parse(string text)
+        {
+            var sourceText = SourceText.From(text);
+            return Parse(sourceText);
+        }
+
+        public static IEnumerable<SyntaxToken> ParseTokens(SourceText text)
         {
             var lexer = new Lexer(text);
             while(true)
@@ -35,6 +42,11 @@ namespace Dacb.CodeAnalysis.Syntax
 
                     yield return token;
             }
+        }
+        public static IEnumerable<SyntaxToken> ParseTokens(string text)
+        {
+            var sourceText = SourceText.From(text);
+            return ParseTokens(sourceText);
         }
     }
 }
