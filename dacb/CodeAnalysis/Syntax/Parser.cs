@@ -9,6 +9,7 @@ namespace Dacb.CodeAnalysis.Syntax
     {
         private readonly ImmutableArray<SyntaxToken> _tokens;
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
+        private readonly SourceText _text;
         private int _position;
 
         public Parser(SourceText text)
@@ -30,8 +31,10 @@ namespace Dacb.CodeAnalysis.Syntax
 
             } while (token.Kind != SyntaxKind.EndOfFileToken);
 
+            _text = text;
             _diagnostics.AddRange(lexer.Diagnostics);
             _tokens = tokens.ToImmutableArray();
+            
         }
         public DiagnosticBag Diagnostics => _diagnostics;
 
@@ -66,7 +69,7 @@ namespace Dacb.CodeAnalysis.Syntax
         {
             var expression = ParseExpression();
             var eofToken = MatchToken(SyntaxKind.EndOfFileToken);
-            return new SyntaxTree(_diagnostics.ToImmutableArray(), expression, eofToken);
+            return new SyntaxTree(_text, _diagnostics.ToImmutableArray(), expression, eofToken);
         }
 
         private ExpressionSyntax ParseExpression()

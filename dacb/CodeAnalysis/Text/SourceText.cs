@@ -77,11 +77,11 @@ namespace Dacb.CodeAnalysis.Text
         {
             //Reliazar una búsqueda binaria
             var lower = 0;
-            var upper = _text.Length -1; //Lines.Length
+            var upper = Lines.Length - 1; 
 
             while(lower <= upper)
             {
-                var index = lower + (upper / lower) / 2;
+                var index = lower + (upper - lower) / 2;
                 var start = Lines[index].Start;
 
                 if (position == start)

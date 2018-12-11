@@ -53,11 +53,18 @@ namespace dacbCompiler
                 }
                 else 
                 {
+                    var text = syntaxTree.Text;
+
                     foreach(var diagnostic in diagnostics)
                     {
+                        var lineIndex = text.GetLineIndex(diagnostic.Span.Start);
+                        var lineNumber = lineIndex + 1;
+                        var character = diagnostic.Span.Start - text.Lines[lineIndex].Start + 1;
+
                         Console.WriteLine();
 
                         Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine($"{lineNumber}, {character}: ");
                         Console.WriteLine(diagnostic);
                         Console.ResetColor();
  
@@ -69,6 +76,7 @@ namespace dacbCompiler
                         Console.Write(prefix);
 
                         Console.ForegroundColor = ConsoleColor.DarkRed;
+                        
                         Console.Write(error);
                         Console.ResetColor();
 
