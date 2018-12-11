@@ -17,6 +17,7 @@ namespace dacbCompiler
             var showTree = false;
             var variables = new Dictionary<VariableSymbol,object>();
             var textBuilder = new StringBuilder();
+            Compilation previous = null;
             while(true)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -50,6 +51,11 @@ namespace dacbCompiler
                         Console.Clear();
                         continue;
                     }
+                    else if (input == "#reset")
+                    {
+                        previous = null;
+                        continue;
+                    }
                 }
 
                 textBuilder.AppendLine(input);
@@ -61,7 +67,10 @@ namespace dacbCompiler
                     continue;
                 
 
-                var compilation = new Compilation(syntaxTree);
+                var compilation = previous == null 
+                    ? new Compilation(syntaxTree) 
+                    : previous.ContinueWith(syntaxTree);
+
                 var result = compilation.Evaluate(variables);
                 
                 if (showTree)
@@ -75,6 +84,8 @@ namespace dacbCompiler
                     Console.ForegroundColor = ConsoleColor.Magenta;
                     Console.WriteLine(result.Value);
                     Console.ResetColor();
+
+                    previous = compilation;
                 }
                 else 
                 {

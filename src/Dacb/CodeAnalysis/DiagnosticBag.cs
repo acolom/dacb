@@ -61,5 +61,17 @@ namespace Dacb.CodeAnalysis
             var message = $"Variable '{name}' does not exists.";
             Report(span, message);
         }
+
+        public void ReportVariableAlreadyDeclared(TextSpan span, string name)
+        {
+            var message = $"Variable {name} is already delcared.";
+            Report(span, message);
+        }
+
+        public void ReportCannotConvert(TextSpan span, Type fromType, Type toType)
+        {
+            var message = $"Cannot convert type '{fromType}' to type '{toType}'.";
+            Report(span, message);
+        }
     }
 }
