@@ -20,6 +20,6 @@ namespace Dacb.CodeAnalysis.Syntax
         public string Text { get; }
         public object Value { get; }
 
-        public override TextSpan Span => new TextSpan(Position, Text.Length);
+        public override TextSpan Span => new TextSpan(Position, Text?.Length ?? 0);
     }
 }
