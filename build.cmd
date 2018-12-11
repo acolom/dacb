@@ -1,4 +1,4 @@
 @echo off
 
-dotnet build
-dotnet test .\Dacb.Tests\Dacb.Tests.csproj
+dotnet build .\src\minsk.sln
+dotnet test .\src\Dacb.Tests\Dacb.Tests.csproj
