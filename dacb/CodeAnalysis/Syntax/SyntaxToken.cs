@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Dacb.CodeAnalysis.Text;
 
 namespace Dacb.CodeAnalysis.Syntax
 {

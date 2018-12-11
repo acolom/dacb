@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Dacb.CodeAnalysis.Syntax;
+using Dacb.CodeAnalysis.Text;
 
 namespace Dacb.CodeAnalysis
 {
