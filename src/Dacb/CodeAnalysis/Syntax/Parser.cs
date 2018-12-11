@@ -64,12 +64,11 @@ namespace Dacb.CodeAnalysis.Syntax
             return new SyntaxToken(kind, Current.Position, null, null);
         }
 
-
-        public SyntaxTree Parse()
+        public CompilationUnitSyntax ParseCompilationUnit()
         {
             var expression = ParseExpression();
-            var eofToken = MatchToken(SyntaxKind.EndOfFileToken);
-            return new SyntaxTree(_text, _diagnostics.ToImmutableArray(), expression, eofToken);
+            var endOfFileToken = MatchToken(SyntaxKind.EndOfFileToken);
+            return new CompilationUnitSyntax(expression, endOfFileToken);
         }
 
         private ExpressionSyntax ParseExpression()

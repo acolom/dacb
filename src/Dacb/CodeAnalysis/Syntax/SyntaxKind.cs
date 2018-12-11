@@ -24,6 +24,8 @@ namespace Dacb.CodeAnalysis.Syntax
         TrueKeyword,
         FalseKeyword,
 
+        //Nodes
+        CompilationUnit,
 
         //Expressions     
         LiteralExpression,
@@ -32,6 +34,7 @@ namespace Dacb.CodeAnalysis.Syntax
         BinaryExpression,
         ParenthesizedExpression,
         AssignmentExpression,
+        
         
     }
 }

@@ -18,5 +18,4 @@ namespace Dacb.CodeAnalysis.Syntax
 
     }
 
-
 }

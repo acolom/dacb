@@ -17,7 +17,7 @@ namespace Dacb.Tests.CodeAnalysis.Syntax
 
             
             var text = $"a {op1Text} b {op2Text} c";
-            var expression = SyntaxTree.Parse(text).Root;
+            var expression = SyntaxTree.Parse(text).Root.Expression;
             
             if (op1Precedence >= op2Precedence)
             {
@@ -75,7 +75,7 @@ namespace Dacb.Tests.CodeAnalysis.Syntax
 
             
             var text = $"{unaryText}a {binaryText} b";
-            var expression = SyntaxTree.Parse(text).Root;
+            var expression = SyntaxTree.Parse(text).Root.Expression;
             
             if (unaryPrecedence >= binaryPrecedence)
             {

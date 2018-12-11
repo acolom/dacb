@@ -11,17 +11,17 @@ namespace Dacb.CodeAnalysis
     {
         public Compilation(SyntaxTree syntax)
         {
-            Syntax = syntax;
+            SyntaxTree = syntax;
         }
 
-        public SyntaxTree Syntax { get; }
+        public SyntaxTree SyntaxTree { get; }
 
         public EvaluationResult Evaluate(Dictionary<VariableSymbol ,object> variables)
         {
             var binder = new Binder(variables);
-            var boundExpression = binder.BindExpression(Syntax.Root);
+            var boundExpression = binder.BindExpression(SyntaxTree.Root.Expression);
             
-            var diagnostics = Syntax.Diagnostics.Concat(binder.Diagnostics).ToImmutableArray();
+            var diagnostics = SyntaxTree.Diagnostics.Concat(binder.Diagnostics).ToImmutableArray();
             if (diagnostics.Any())
                 return new EvaluationResult(diagnostics, null);
 
