@@ -1,3 +1,5 @@
+using Dacb.CodeAnalysis.Text;
+
 namespace Dacb.CodeAnalysis
 {
     public sealed class Diagnostic

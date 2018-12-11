@@ -74,7 +74,7 @@ namespace Dacb.CodeAnalysis.Syntax
             }
         }
 
-        public static string GetTextFor(SyntaxKind kind)
+        public static string GetText(SyntaxKind kind)
         {
             switch(kind)
             {

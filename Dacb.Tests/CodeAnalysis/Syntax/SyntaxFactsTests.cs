@@ -11,7 +11,7 @@ namespace Dacb.Tests.CodeAnalysis.Syntax
         [MemberData(nameof(GetSyntaxKindData))]
         public void SyntaxFacts_RoundTrips(SyntaxKind kind) 
         {
-            var text = SyntaxFacts.GetTextFor(kind);
+            var text = SyntaxFacts.GetText(kind);
             if (text == null)
                 return;
 
