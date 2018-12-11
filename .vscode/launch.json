@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/dacbCompiler/bin/Debug/netcoreapp2.1/dacbCompiler.dll",
+            "program": "${workspaceFolder}/src/dacbCompiler/bin/Debug/netcoreapp2.1/dacbCompiler.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/dacbCompiler",
+            "cwd": "${workspaceFolder}/src/dacbCompiler",
             // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
             "console": "externalTerminal",
             "stopAtEntry": false,
@@ -30,9 +30,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/dacbCompiler/bin/Debug/netcoreapp2.1/dacbCompiler.dll",
+            "program": "${workspaceFolder}/src/dacbCompiler/bin/Debug/netcoreapp2.1/dacbCompiler.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/dacbCompiler",
+            "cwd": "${workspaceFolder}/src/dacbCompiler",
             "console": "internalConsole",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart"

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -43,28 +44,41 @@ namespace Dacb.CodeAnalysis.Syntax
             PrettyPrint(textWriter, this);
         }
 
-        private static void PrettyPrint(TextWriter textWriter, SyntaxNode node, string indent = "", bool isLast = true)
+        private static void PrettyPrint(TextWriter writer, SyntaxNode node, string indent = "", bool isLast = true)
         {
             // ├──
             // │
             // └──
+            var isToConsole = writer == Console.Out;
 
             var marker = isLast ? "└──" : "├──";
-            textWriter.Write(indent);
-            textWriter.Write(marker);
-            textWriter.Write(node.Kind);
+            
+            if (isToConsole)
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+            
+            writer.Write(indent);    
+            writer.Write(marker);
+            
+             if (isToConsole)
+                Console.ForegroundColor = node is SyntaxToken ? ConsoleColor.Blue : ConsoleColor.Cyan;
+
+            writer.Write(node.Kind);
+
             if (node is SyntaxToken t && t.Value != null)
             {
-                textWriter.Write(" ");
-                textWriter.Write(t.Value);
+                writer.Write(" ");
+                writer.Write(t.Value);
             }
-            textWriter.WriteLine();
+            if (isToConsole)
+                Console.ResetColor();
+
+            writer.WriteLine();
             
             indent += isLast ? "   " : "│  ";
             
             var lastChild = node.GetChildren().LastOrDefault();
             foreach(var child in node.GetChildren())
-                PrettyPrint(textWriter, child, indent, lastChild == child);
+                PrettyPrint(writer, child, indent, lastChild == child);
         }
 
         public override string ToString() 
