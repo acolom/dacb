@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dacbCompiler", "dacbCompiler\dacbCompiler.csproj", "{6E94EC70-066B-4829-B5AE-7F4112027AFC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dacbCompiler", "DacbCompiler\dacbCompiler.csproj", "{6E94EC70-066B-4829-B5AE-7F4112027AFC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dacb.Tests", "Dacb.Tests\Dacb.Tests.csproj", "{1A2115B6-967C-4AA7-B551-23629EF9CBE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dacb", "dacb\dacb.csproj", "{38109363-3EF0-49FA-B4DD-4A521D2ED32D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dacb", "Dacb\dacb.csproj", "{38109363-3EF0-49FA-B4DD-4A521D2ED32D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
