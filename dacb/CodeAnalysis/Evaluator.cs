@@ -23,35 +23,21 @@ namespace Dacb.CodeAnalysis
 
         private object EvaluateExression(BoundExpression node)
         {
-            if (node is BoundLiteralExpression)
+            switch (node.Kind)
             {
-                return EvaluateLiteralExpression((BoundLiteralExpression)node);
+                case BoundNodeKind.LiteralExpression:
+                    return EvaluateLiteralExpression((BoundLiteralExpression)node);
+                case BoundNodeKind.VariableExpression:
+                    return EvaluateVariableExpression((BoundVariableExpression)node);
+                case BoundNodeKind.AssignmentExpression:
+                    return EvaluateAssignmentExpression((BoundAssignmentExpression)node);
+                case BoundNodeKind.UnaryExpression:
+                    return EvaluateUnaryExpression((BoundUnaryExpression)node);
+                case BoundNodeKind.BinaryExpression:
+                    return EvaluateBinaryExpression((BoundBinaryExpression)node);
+                default:
+                    throw new Exception($"Unexpected node: {node.Kind}");
             }
-
-            else if (node is BoundVariableExpression)
-            {
-                return EvaluateVariableExpression((BoundVariableExpression)node);
-            }
-
-            else if (node is BoundAssignmentExpression)
-            {
-                return EvaluateAssignmentExpression((BoundAssignmentExpression)node);
-            }
-
-            else if (node is BoundUnaryExpression)
-            {
-                return EvaluateUnaryExpression((BoundUnaryExpression)node);
-
-            }
-            else if (node is BoundBinaryExpression)
-            {
-                return EvaluateBinaryExpression((BoundBinaryExpression)node);
-            }
-            else 
-            {
-                throw new Exception($"Unexpected node: {node.Kind}");
-            }
-            
         }
 
         private static object EvaluateLiteralExpression(BoundLiteralExpression n)

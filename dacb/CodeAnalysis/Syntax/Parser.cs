@@ -6,7 +6,7 @@ namespace Dacb.CodeAnalysis.Syntax
     internal sealed class Parser
     {
         private readonly SyntaxToken[] _tokens;
-        private DiagnosticBag _diagnostics = new DiagnosticBag();
+        private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
         private int _position;
 
         public Parser(string text)
@@ -134,31 +134,43 @@ namespace Dacb.CodeAnalysis.Syntax
             switch (Current.Kind)
             {
                 case SyntaxKind.OpenParanthesisToken:
-                    {
-                        var left = NextToken();
-                        var expression = ParseExpression();
-                        var righ = MatchToken(SyntaxKind.CloseParanthesisToken);
-                        return new ParenthesizedExpressionSyntax(left, expression, righ);
-                    }
+                    return ParseParenthesizedExpression();
                 case SyntaxKind.TrueKeyword:
                 case SyntaxKind.FalseKeyword:
-                    {
-                        var keywordToken = NextToken();
-                        var value = keywordToken.Kind == SyntaxKind.TrueKeyword;
-                        return new LiteralExpressionSyntax(keywordToken, value);
-                    }
+                    return ParseBooleanLiteral();
+                case SyntaxKind.NumberToken:
+                    return ParseNumberLiteral();
                 case SyntaxKind.IdentifierToken:
-                    {
-                        var identifierToken = NextToken();
-                        return new NameExpressionSyntax(identifierToken);
-
-                    }
                 default:
-                    {
-                        var numberToken = MatchToken(SyntaxKind.NumberToken);
-                        return new LiteralExpressionSyntax(numberToken);
-                    }
+                    return ParseNameExpression();
             }
+        }
+
+        private ExpressionSyntax ParseNumberLiteral()
+        {
+            var numberToken = MatchToken(SyntaxKind.NumberToken);
+            return new LiteralExpressionSyntax(numberToken);
+        }
+
+        private ExpressionSyntax ParseParenthesizedExpression()
+        {
+            var left = MatchToken(SyntaxKind.OpenParanthesisToken);
+            var expression = ParseExpression();
+            var righ = MatchToken(SyntaxKind.CloseParanthesisToken);
+            return new ParenthesizedExpressionSyntax(left, expression, righ);
+        }
+
+        private ExpressionSyntax ParseBooleanLiteral()
+        {
+            var isTrue = Current.Kind == SyntaxKind.TrueKeyword;
+            var keywordToken = isTrue ? MatchToken(SyntaxKind.TrueKeyword) : MatchToken(SyntaxKind.FalseKeyword);
+            return new LiteralExpressionSyntax(keywordToken, isTrue);
+        }
+
+        private ExpressionSyntax ParseNameExpression()
+        {
+            var identifierToken = MatchToken(SyntaxKind.IdentifierToken);
+            return new NameExpressionSyntax(identifierToken);
         }
     }
 }
