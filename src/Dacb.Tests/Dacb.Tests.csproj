@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dacb\Dacb.csproj" />
+    <ProjectReference Include="..\Dacb\dacb.csproj" />
   </ItemGroup>
 
 </Project>

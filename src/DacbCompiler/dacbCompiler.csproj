@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Dacb\Dacb.csproj" />
+    <ProjectReference Include="..\Dacb\dacb.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
