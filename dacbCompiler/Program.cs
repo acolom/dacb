@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Dacb.CodeAnalysis;
 using Dacb.CodeAnalysis.Binding;
 using Dacb.CodeAnalysis.Syntax;
+using Dacb.CodeAnalysis.Text;
 
 namespace dacbCompiler
 {
@@ -14,31 +16,50 @@ namespace dacbCompiler
         {
             var showTree = false;
             var variables = new Dictionary<VariableSymbol,object>();
+            var textBuilder = new StringBuilder();
             while(true)
             {
-                Console.Write("> ");
-                var line = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(line))
-                    return;
+                if (textBuilder.Length == 0)
+                    Console.Write("> ");
+                else    
+                    Console.Write("| ");
+                
+                var input = Console.ReadLine();
 
-                if (line == "#showTree")
+                var isBlank = string.IsNullOrWhiteSpace(input);
+                
+
+                if (textBuilder.Length == 0)
                 {
-                    showTree = !showTree;
-                    Console.WriteLine(showTree ? "Show parse trees" : "Not showing parse trees");
-                    continue;
+                    if (isBlank)
+                    {
+                        break;
+                    }
+                    else if (input == "#showTree")
+                    {
+                        showTree = !showTree;
+                        Console.WriteLine(showTree ? "Show parse trees" : "Not showing parse trees");
+                        continue;
+                    }
+                    else if (input == "#cls")
+                    {
+                        Console.Clear();
+                        continue;
+                    }
                 }
-                else if (line == "#cls")
-                {
-                    Console.Clear();
+
+                 textBuilder.AppendLine(input);
+                var text = textBuilder.ToString();
+
+                var syntaxTree = SyntaxTree.Parse(text);
+
+                if (!isBlank && syntaxTree.Diagnostics.Any())
                     continue;
-                }
-                    	
-                var syntaxTree = SyntaxTree.Parse(line);
+                
+
                 var compilation = new Compilation(syntaxTree);
                 var result = compilation.Evaluate(variables);
                 
-                IReadOnlyList<Diagnostic> diagnostics = result.Diagnostics;
-
                 if (showTree)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;                
@@ -47,19 +68,19 @@ namespace dacbCompiler
                 }
 
                 
-                if (diagnostics.Count == 0)
+                if (!result.Diagnostics.Any())
                 {
                     Console.WriteLine(result.Value);
                 }
                 else 
                 {
-                    var text = syntaxTree.Text;
-
-                    foreach(var diagnostic in diagnostics)
+                    foreach(var diagnostic in result.Diagnostics)
                     {
-                        var lineIndex = text.GetLineIndex(diagnostic.Span.Start);
+                        var lineIndex = syntaxTree.Text.GetLineIndex(diagnostic.Span.Start);
+                        var line = syntaxTree.Text.Lines[lineIndex];
                         var lineNumber = lineIndex + 1;
-                        var character = diagnostic.Span.Start - text.Lines[lineIndex].Start + 1;
+                        
+                        var character = diagnostic.Span.Start - line.Start + 1;
 
                         Console.WriteLine();
 
@@ -68,9 +89,12 @@ namespace dacbCompiler
                         Console.WriteLine(diagnostic);
                         Console.ResetColor();
  
-                        var prefix = line.Substring(0, diagnostic.Span.Start);
-                        var error = line.Substring(diagnostic.Span.Start, diagnostic.Span.Length);
-                        var suffix = line.Substring(diagnostic.Span.End);
+                        var prefixSpan = TextSpan.FromBounds(line.Start, diagnostic.Span.Start);
+                        var suffixSpan = TextSpan.FromBounds(diagnostic.Span.End, line.End);
+
+                        var prefix = syntaxTree.Text.ToString(prefixSpan);
+                        var error = syntaxTree.Text.ToString(diagnostic.Span);
+                        var suffix = syntaxTree.Text.ToString(suffixSpan);
 
                         Console.Write("    ");
                         Console.Write(prefix);
@@ -87,6 +111,7 @@ namespace dacbCompiler
 
                     Console.WriteLine();
                 }
+                textBuilder.Clear();
             }
         }
     }
