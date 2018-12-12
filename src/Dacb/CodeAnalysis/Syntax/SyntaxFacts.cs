@@ -102,6 +102,10 @@ namespace Dacb.CodeAnalysis.Syntax
                     return  "(";
                 case SyntaxKind.CloseParanthesisToken: 
                     return  ")";
+                case SyntaxKind.OpenBraceToken: 
+                    return  "{";
+                case SyntaxKind.CloseBraceToken: 
+                    return  "}";
                 case SyntaxKind.TrueKeyword:
                     return  "true";
                 case SyntaxKind.FalseKeyword:

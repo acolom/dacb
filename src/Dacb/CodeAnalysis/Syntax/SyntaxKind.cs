@@ -19,6 +19,8 @@ namespace Dacb.CodeAnalysis.Syntax
         BangEqualsToken,
         OpenParanthesisToken,
         CloseParanthesisToken,
+        OpenBraceToken,
+        CloseBraceToken,
         IdentifierToken,
         //keywords
         TrueKeyword,
@@ -27,6 +29,10 @@ namespace Dacb.CodeAnalysis.Syntax
         //Nodes
         CompilationUnit,
 
+        //Statements
+        BlockStatement,
+        ExpressionStatement,
+
         //Expressions     
         LiteralExpression,
         NameExpression,
@@ -34,7 +40,6 @@ namespace Dacb.CodeAnalysis.Syntax
         BinaryExpression,
         ParenthesizedExpression,
         AssignmentExpression,
-        
         
     }
 }
