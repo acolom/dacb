@@ -22,16 +22,21 @@ namespace Dacb.CodeAnalysis.Syntax
         OpenBraceToken,
         CloseBraceToken,
         IdentifierToken,
+       
         //keywords
         TrueKeyword,
         FalseKeyword,
+        LetKeyword,
+        VarKeyword,
 
         //Nodes
         CompilationUnit,
 
         //Statements
         BlockStatement,
+        VariableDeclaration,
         ExpressionStatement,
+        
 
         //Expressions     
         LiteralExpression,
