@@ -134,6 +134,14 @@ namespace Dacb.CodeAnalysis
                     return Equals(left, right);
                 case BoundBinaryOperatorKind.NotEquals:
                     return !Equals(left, right);
+                case BoundBinaryOperatorKind.LessThan:
+                    return (int)left < (int)right;
+                case BoundBinaryOperatorKind.LessOrEquals:
+                    return (int)left <= (int)right;
+                case BoundBinaryOperatorKind.GreaterThan:
+                    return (int)left > (int)right;
+                case BoundBinaryOperatorKind.GreaterOrEquals:
+                    return (int)left >= (int)right;
                 default:
                     throw new Exception($"Unexpected operator: {b.Op.Kind}");
             }

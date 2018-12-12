@@ -9,7 +9,11 @@ namespace Dacb.CodeAnalysis.Binding
         LogicalAnd,
         LogicalOr,
         Equals,
-        NotEquals
+        NotEquals,
+        LessThan,
+        LessOrEquals,
+        GreaterThan,
+        GreaterOrEquals
     }
     
 }
