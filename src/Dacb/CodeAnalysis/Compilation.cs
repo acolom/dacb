@@ -11,9 +11,8 @@ namespace Dacb.CodeAnalysis
     public class Compilation 
     {
         private BoundGlobalScope _globalScope;
-        public Compilation(SyntaxTree syntax)
+        public Compilation(SyntaxTree syntax) : this(null, syntax)
         {
-            SyntaxTree = syntax;
         }
 
         private Compilation(Compilation previous, SyntaxTree syntax)
