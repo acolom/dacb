@@ -61,5 +61,23 @@ namespace Dacb.CodeAnalysis
             var message = $"Variable '{name}' does not exists.";
             Report(span, message);
         }
+
+        public void ReportVariableAlreadyDeclared(TextSpan span, string name)
+        {
+            var message = $"Variable {name} is already declared.";
+            Report(span, message);
+        }
+
+        public void ReportCannotConvert(TextSpan span, Type fromType, Type toType)
+        {
+            var message = $"Cannot convert type '{fromType}' to type '{toType}'.";
+            Report(span, message);
+        }
+
+        internal void ReportCannotAssign(TextSpan span, string name)
+        {
+            var message = $"Variable {name} is read-only and cannot be assigned to.";
+            Report(span, message);
+        }
     }
 }

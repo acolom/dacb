@@ -43,10 +43,14 @@ namespace Dacb.CodeAnalysis.Syntax
         {
             switch(text)
             {
-                case "true":
-                    return SyntaxKind.TrueKeyword;
                 case "false":
                     return SyntaxKind.FalseKeyword;
+                case "let":
+                    return SyntaxKind.LetKeyword;
+                case "true":
+                    return SyntaxKind.TrueKeyword;
+                case "var":
+                    return SyntaxKind.VarKeyword;
                 default:
                     return SyntaxKind.IdentifierToken;
             }
@@ -102,10 +106,18 @@ namespace Dacb.CodeAnalysis.Syntax
                     return  "(";
                 case SyntaxKind.CloseParanthesisToken: 
                     return  ")";
+                case SyntaxKind.OpenBraceToken: 
+                    return  "{";
+                case SyntaxKind.CloseBraceToken: 
+                    return  "}";
                 case SyntaxKind.TrueKeyword:
                     return  "true";
                 case SyntaxKind.FalseKeyword:
                     return  "false";
+                case SyntaxKind.LetKeyword:
+                    return  "let";
+                case SyntaxKind.VarKeyword:
+                    return  "var";
                 default:
                     return null;
             }

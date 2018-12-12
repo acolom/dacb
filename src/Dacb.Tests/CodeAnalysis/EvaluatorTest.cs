@@ -29,7 +29,7 @@ namespace Dacb.Tests.CodeAnalysis
         [InlineData("false", false)]
         [InlineData("!true", false)]
         [InlineData("!false", true)]
-        [InlineData("(a = 10) * a", 100)]
+        [InlineData("{ var a = 10 (a = 10) * a}", 100)]
         public void SyntaxFacts_RoundTrips(string text, object expectedValue) 
         {
             var syntaxTree = SyntaxTree.Parse(text);

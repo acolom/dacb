@@ -19,11 +19,24 @@ namespace Dacb.CodeAnalysis.Syntax
         BangEqualsToken,
         OpenParanthesisToken,
         CloseParanthesisToken,
+        OpenBraceToken,
+        CloseBraceToken,
         IdentifierToken,
+       
         //keywords
         TrueKeyword,
         FalseKeyword,
+        LetKeyword,
+        VarKeyword,
 
+        //Nodes
+        CompilationUnit,
+
+        //Statements
+        BlockStatement,
+        VariableDeclaration,
+        ExpressionStatement,
+        
 
         //Expressions     
         LiteralExpression,

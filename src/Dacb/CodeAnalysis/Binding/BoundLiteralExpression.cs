@@ -4,10 +4,6 @@ namespace Dacb.CodeAnalysis.Binding
 {
     internal sealed class BoundLiteralExpression : BoundExpression 
     {
-        public BoundLiteralExpression()
-        {
-        }
-
         public BoundLiteralExpression(object value)
         {
             Value = value;

@@ -17,7 +17,7 @@ namespace Dacb.Tests.CodeAnalysis.Syntax
 
             
             var text = $"a {op1Text} b {op2Text} c";
-            var expression = SyntaxTree.Parse(text).Root;
+            var expression = ParseExpression(text);
             
             if (op1Precedence >= op2Precedence)
             {
@@ -73,10 +73,10 @@ namespace Dacb.Tests.CodeAnalysis.Syntax
             var unaryText = SyntaxFacts.GetText(unaryKind);
             var binaryText = SyntaxFacts.GetText(binaryKind);
 
-            
+
             var text = $"{unaryText}a {binaryText} b";
-            var expression = SyntaxTree.Parse(text).Root;
-            
+            var expression = ParseExpression(text);
+
             if (unaryPrecedence >= binaryPrecedence)
             {
                 //    bin  
@@ -84,7 +84,7 @@ namespace Dacb.Tests.CodeAnalysis.Syntax
                 //   una   b 
                 //    |
                 //    a
-                using(var e = new AssertingEnumerator(expression))
+                using (var e = new AssertingEnumerator(expression))
                 {
                     e.AssertNode(SyntaxKind.BinaryExpression);
                     e.AssertNode(SyntaxKind.UnaryExpression);
@@ -94,18 +94,18 @@ namespace Dacb.Tests.CodeAnalysis.Syntax
                     e.AssertToken(binaryKind, binaryText);
                     e.AssertNode(SyntaxKind.NameExpression);
                     e.AssertToken(SyntaxKind.IdentifierToken, "b");
-                    
+
                 }
             }
             else
             {
-               //     una
+                //     una
                 //     |
                 //    bin  
                 //    / \
                 //   a   b 
 
-                using(var e = new AssertingEnumerator(expression))
+                using (var e = new AssertingEnumerator(expression))
                 {
                     e.AssertNode(SyntaxKind.UnaryExpression);
                     e.AssertToken(unaryKind, unaryText);
@@ -119,6 +119,13 @@ namespace Dacb.Tests.CodeAnalysis.Syntax
             }
         }
 
+        private static ExpressionSyntax ParseExpression(string text)
+        {
+            var syntaxTree = SyntaxTree.Parse(text);
+            var root = syntaxTree.Root;
+            var statement = root.Statement;
+            return Assert.IsType<ExpressionStatementSyntax>(statement).Expression;
+        }
 
         public static IEnumerable<object[]> GetBinaryOperatorPairsData() 
         {
