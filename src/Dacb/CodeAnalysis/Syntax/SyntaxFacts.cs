@@ -47,8 +47,12 @@ namespace Dacb.CodeAnalysis.Syntax
         {
             switch(text)
             {
+                case "else":
+                    return SyntaxKind.ElseKeyword;
                 case "false":
                     return SyntaxKind.FalseKeyword;
+                case "if":
+                    return SyntaxKind.IfKeyword;
                 case "let":
                     return SyntaxKind.LetKeyword;
                 case "true":
@@ -122,6 +126,10 @@ namespace Dacb.CodeAnalysis.Syntax
                     return  "{";
                 case SyntaxKind.CloseBraceToken: 
                     return  "}";
+                case SyntaxKind.IfKeyword:
+                    return  "if";
+                case SyntaxKind.ElseKeyword:
+                    return  "else";
                 case SyntaxKind.TrueKeyword:
                     return  "true";
                 case SyntaxKind.FalseKeyword:
