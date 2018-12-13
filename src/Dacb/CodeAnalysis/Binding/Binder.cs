@@ -67,6 +67,8 @@ namespace Dacb.CodeAnalysis.Binding
                     return BindVariableDeclaration((VariableDeclarationSyntax)syntax);
                 case SyntaxKind.IfStatement:
                     return BindIfStatement((IfStatementSyntax)syntax);
+                case SyntaxKind.WhileStatement:
+                    return BindWhileStatement((WhileStatementSyntax)syntax);
                 case SyntaxKind.ExpressionStatement:
                     return BindExpressionStatement((ExpressionStatementSyntax)syntax);
                 
@@ -114,6 +116,12 @@ namespace Dacb.CodeAnalysis.Binding
 
             return new BoundIfStatement(condition, thenStatement, elseStatement);
 
+        }
+        private BoundStatement BindWhileStatement(WhileStatementSyntax syntax)
+        {
+            var condition = BindExpression(syntax.Condition, typeof(bool));
+            var bodyStatement = BindStatement(syntax.BodyStatement);
+            return new BoundWhileStatement(condition, bodyStatement);
         }
 
         private BoundStatement BindExpressionStatement(ExpressionStatementSyntax syntax)

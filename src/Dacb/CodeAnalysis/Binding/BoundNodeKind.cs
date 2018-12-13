@@ -6,6 +6,7 @@ namespace Dacb.CodeAnalysis.Binding
         BlockStatement,
         ExpressionStatement,
         IfStatement,
+        WhileStatement,
         VariableDeclaration,
 
         //expressions

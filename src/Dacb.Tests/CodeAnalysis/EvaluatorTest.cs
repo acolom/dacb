@@ -44,6 +44,7 @@ namespace Dacb.Tests.CodeAnalysis
         [InlineData("{ var a = 0 if a == 0 a = 10 a}", 10)]
         [InlineData("{ var a = 0 if a == 0 a = 10 else a = 5 a}", 10)]
         [InlineData("{ var a = 0 if a == 4 a = 10 else a = 5 a}", 5)]
+        [InlineData("{ var result = 0 var a = 10 while a > 0 { result = result + a a = a -1}  result}", 55)]
         public void Evaluator_Computes_CorrectValues(string text, object expectedValue)
         {
             AssertValue(text, expectedValue);

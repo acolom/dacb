@@ -59,6 +59,8 @@ namespace Dacb.CodeAnalysis.Syntax
                     return SyntaxKind.TrueKeyword;
                 case "var":
                     return SyntaxKind.VarKeyword;
+                case "while":
+                    return SyntaxKind.WhileKeyword;
                 default:
                     return SyntaxKind.IdentifierToken;
             }
@@ -130,6 +132,8 @@ namespace Dacb.CodeAnalysis.Syntax
                     return  "if";
                 case SyntaxKind.ElseKeyword:
                     return  "else";
+                case SyntaxKind.WhileKeyword:
+                    return  "while";
                 case SyntaxKind.TrueKeyword:
                     return  "true";
                 case SyntaxKind.FalseKeyword:

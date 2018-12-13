@@ -83,6 +83,8 @@ namespace Dacb.CodeAnalysis.Syntax
                     return ParseVariableDeclaration();
                 case SyntaxKind.IfKeyword:
                     return ParseIfStatement();
+                case SyntaxKind.WhileKeyword:
+                    return ParseWhileStatement();
                 default:
                     return ParseExpressionStatement();
             }
@@ -120,6 +122,15 @@ namespace Dacb.CodeAnalysis.Syntax
             var elseKeyword = MatchToken(SyntaxKind.ElseKeyword);
             var elseStatement = ParseStatement();
             return  new ElseClauseSyntax(elseKeyword, elseStatement);
+        }
+        
+        private StatementSyntax ParseWhileStatement()
+        {
+            var whileKeyword = MatchToken(SyntaxKind.WhileKeyword);
+            var condition = ParseExpression();
+            var body = ParseStatement();
+
+            return new WhileStatementSyntax(whileKeyword, condition, body);
         }
 
         private ExpressionStatementSyntax ParseExpressionStatement()

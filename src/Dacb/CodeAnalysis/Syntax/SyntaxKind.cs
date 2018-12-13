@@ -34,6 +34,7 @@ namespace Dacb.CodeAnalysis.Syntax
         VarKeyword,
         IfKeyword,
         ElseKeyword,
+        WhileKeyword,
 
         //Nodes
         CompilationUnit,
@@ -44,6 +45,7 @@ namespace Dacb.CodeAnalysis.Syntax
         VariableDeclaration,
         ExpressionStatement,
         IfStatement,
+        WhileStatement,
 
         //Expressions     
         LiteralExpression,
