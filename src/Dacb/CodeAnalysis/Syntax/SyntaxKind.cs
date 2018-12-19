@@ -17,6 +17,10 @@ namespace Dacb.CodeAnalysis.Syntax
         PipePipeToken,
         EqualsEqualsToken,
         BangEqualsToken,
+        LessToken,
+        LessOrEqualsToken,
+        GreaterToken,
+        GreaterOrEqualsToken,
         OpenParanthesisToken,
         CloseParanthesisToken,
         OpenBraceToken,
@@ -24,20 +28,29 @@ namespace Dacb.CodeAnalysis.Syntax
         IdentifierToken,
        
         //keywords
-        TrueKeyword,
+        ElseKeyword,
         FalseKeyword,
+        ForKeyword,
+        IfKeyword,
         LetKeyword,
-        VarKeyword,
+        ToKeyword,
+        TrueKeyword,
+        VarKeyword,      
+        WhileKeyword,
 
+        
         //Nodes
         CompilationUnit,
+        ElseClause,
 
         //Statements
         BlockStatement,
         VariableDeclaration,
         ExpressionStatement,
+        IfStatement,
+        WhileStatement,
+        ForStatement,
         
-
         //Expressions     
         LiteralExpression,
         NameExpression,

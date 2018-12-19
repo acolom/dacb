@@ -29,6 +29,10 @@ namespace Dacb.CodeAnalysis.Syntax
                     return 4;
                 case SyntaxKind.EqualsEqualsToken:
                 case SyntaxKind.BangEqualsToken:
+                case SyntaxKind.LessToken:
+                case SyntaxKind.LessOrEqualsToken:
+                case SyntaxKind.GreaterToken:
+                case SyntaxKind.GreaterOrEqualsToken:
                     return 3;
                 case SyntaxKind.AmpsersandAmpsersandToken:
                     return 2;
@@ -43,14 +47,24 @@ namespace Dacb.CodeAnalysis.Syntax
         {
             switch(text)
             {
+                case "else":
+                    return SyntaxKind.ElseKeyword;
                 case "false":
                     return SyntaxKind.FalseKeyword;
+                case "for":
+                    return SyntaxKind.ForKeyword;
+                case "if":
+                    return SyntaxKind.IfKeyword;
                 case "let":
                     return SyntaxKind.LetKeyword;
+                case "to":
+                    return SyntaxKind.ToKeyword;
                 case "true":
                     return SyntaxKind.TrueKeyword;
                 case "var":
                     return SyntaxKind.VarKeyword;
+                case "while":
+                    return SyntaxKind.WhileKeyword;
                 default:
                     return SyntaxKind.IdentifierToken;
             }
@@ -102,6 +116,14 @@ namespace Dacb.CodeAnalysis.Syntax
                     return  "==";
                 case SyntaxKind.BangEqualsToken: 
                     return  "!=";
+                case SyntaxKind.LessToken:
+                    return "<";
+                case SyntaxKind.LessOrEqualsToken:
+                    return "<=";
+                case SyntaxKind.GreaterToken:
+                    return ">";
+                case SyntaxKind.GreaterOrEqualsToken:
+                    return ">=";
                 case SyntaxKind.OpenParanthesisToken: 
                     return  "(";
                 case SyntaxKind.CloseParanthesisToken: 
@@ -110,6 +132,16 @@ namespace Dacb.CodeAnalysis.Syntax
                     return  "{";
                 case SyntaxKind.CloseBraceToken: 
                     return  "}";
+                case SyntaxKind.IfKeyword:
+                    return  "if";
+                case SyntaxKind.ElseKeyword:
+                    return  "else";
+                 case SyntaxKind.WhileKeyword:
+                    return  "while";
+                case SyntaxKind.ForKeyword:
+                    return  "for";
+                case SyntaxKind.ToKeyword:
+                    return  "to";
                 case SyntaxKind.TrueKeyword:
                     return  "true";
                 case SyntaxKind.FalseKeyword:

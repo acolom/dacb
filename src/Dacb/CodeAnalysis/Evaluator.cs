@@ -53,6 +53,15 @@ namespace Dacb.CodeAnalysis
                 case BoundNodeKind.VariableDeclaration:
                     EvaluateVariableDeclaration((BoundVariableDeclaration)node);
                     break;
+                case BoundNodeKind.IfStatement:
+                    EvaluateIfStatement((BoundIfStatement)node);
+                    break;
+                case BoundNodeKind.WhileStatement:
+                    EvaluateWhileStatement((BoundWhileStatement)node);
+                    break;
+                case BoundNodeKind.ForStatement:
+                    EvaluateForStatement((BoundForStatement)node);
+                    break;
                 case BoundNodeKind.ExpressionStatement:
                     EvaluateExpressionStatement((BoundExpressionStatement)node);
                     break;
@@ -61,6 +70,14 @@ namespace Dacb.CodeAnalysis
             }
         }
 
+        private void EvaluateBlockStatement(BoundBlockStatement node)
+        {
+            foreach (var statement in node.Statements)
+            {
+                EvaluateStatement(statement);
+            }
+        }
+        
         private void EvaluateVariableDeclaration(BoundVariableDeclaration node)
         {
             var value = EvaluateExpression(node.Initializer);
@@ -68,12 +85,29 @@ namespace Dacb.CodeAnalysis
 
             _lastValue = value;
         }
-
-        private void EvaluateBlockStatement(BoundBlockStatement node)
+        private void EvaluateIfStatement(BoundIfStatement node)
         {
-            foreach (var statement in node.Statements)
-            {
-                EvaluateStatement(statement);
+            var condition = (bool)EvaluateExpression(node.Condition);
+            if (condition)
+                EvaluateStatement(node.ThenStatement);
+            else if (node.ElseStatement != null)
+                EvaluateStatement(node.ElseStatement);
+        }
+
+        private void EvaluateWhileStatement(BoundWhileStatement node)
+        {
+            while ((bool)EvaluateExpression(node.Condition))
+                EvaluateStatement(node.BodyStatement);
+        }
+
+        private void EvaluateForStatement(BoundForStatement node)
+        {
+            var lowerbound = (int)EvaluateExpression(node.LowerBound);
+            var upperbound = (int)EvaluateExpression(node.UpperBound);
+            
+            for(var i = lowerbound; i <= upperbound; i++){
+                _variables[node.Variable] = i;
+                EvaluateStatement(node.Body);
             }
         }
 
@@ -134,6 +168,14 @@ namespace Dacb.CodeAnalysis
                     return Equals(left, right);
                 case BoundBinaryOperatorKind.NotEquals:
                     return !Equals(left, right);
+                case BoundBinaryOperatorKind.LessThan:
+                    return (int)left < (int)right;
+                case BoundBinaryOperatorKind.LessOrEquals:
+                    return (int)left <= (int)right;
+                case BoundBinaryOperatorKind.GreaterThan:
+                    return (int)left > (int)right;
+                case BoundBinaryOperatorKind.GreaterOrEquals:
+                    return (int)left >= (int)right;
                 default:
                     throw new Exception($"Unexpected operator: {b.Op.Kind}");
             }
