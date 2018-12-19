@@ -28,15 +28,17 @@ namespace Dacb.CodeAnalysis.Syntax
         IdentifierToken,
        
         //keywords
-        TrueKeyword,
-        FalseKeyword,
-        LetKeyword,
-        VarKeyword,
-        IfKeyword,
         ElseKeyword,
-        WhileKeyword,
+        FalseKeyword,
         ForKeyword,
+        IfKeyword,
+        LetKeyword,
         ToKeyword,
+        TrueKeyword,
+        VarKeyword,      
+        WhileKeyword,
+
+        
         //Nodes
         CompilationUnit,
         ElseClause,
