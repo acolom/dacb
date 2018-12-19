@@ -177,6 +177,19 @@ namespace Dacb.Tests.CodeAnalysis
             AssertDiagnostics(text, diagnostics);
         }
 
+
+        [Fact]
+        public void Evaluator_NameExpression_Reports_NoErrorForInsertedToken()
+        {
+            var text = @"[]";
+
+            var diagnostics = @"
+                Unexpected token <EndOfFileToken>, expected <IdentifierToken>.
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
         [Fact]
         public void Evaluator_AssignmentExpression_Reports_Undefined()
         {

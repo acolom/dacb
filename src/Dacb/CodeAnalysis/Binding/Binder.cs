@@ -194,6 +194,12 @@ namespace Dacb.CodeAnalysis.Binding
         {
             var name = syntax.IdentifierToken.Text;
 
+            if (string.IsNullOrEmpty(name))
+            {
+                // Esto siginifica que el parser inserto el token
+                // el error ya se reporto asi que podriamos devolver un error expression
+                return new BoundLiteralExpression(0);
+            }
             if (!_scope.TryLookup(name, out var variable))
             {
                 _diagnostics.ReportUndefinedName(syntax.IdentifierToken.Span, name);

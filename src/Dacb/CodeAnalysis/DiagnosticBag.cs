@@ -27,20 +27,20 @@ namespace Dacb.CodeAnalysis
 
         public void ReportInvalidNumber(TextSpan span, string text, Type type)
         {
-            var message =  $"The number '{text}' is not a valid {type}";
+            var message =  $"The number '{text}' is not a valid {type}.";
             Report(span, message);
         }
 
         public void ReportBadCharacter(int postion, char character)
         {
             var span = new TextSpan(postion, 1);
-            var message = $"ERROR: Bad character input: '{character}'";
+            var message = $"Bad character input: '{character}'.";
             Report(span, message);
         }
 
         public void ReportUnexpectedToken(TextSpan span, SyntaxKind actualKind, SyntaxKind expectedKind)
         {
-            var message = $"ERROR: Unexpected token <{actualKind}>, expected <{expectedKind}>";
+            var message = $"Unexpected token <{actualKind}>, expected <{expectedKind}>.";
             Report(span, message);
         }
 
