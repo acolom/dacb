@@ -159,11 +159,24 @@ namespace Dacb.CodeAnalysis.Syntax
             var statements = ImmutableArray.CreateBuilder<StatementSyntax>();
             var openBraceToken = MatchToken(SyntaxKind.OpenBraceToken);
             
+            var startToken = Current;
             while(Current.Kind != SyntaxKind.EndOfFileToken && 
                   Current.Kind != SyntaxKind.CloseBraceToken)
                 {
                     var statement = ParseStatement();
                     statements.Add(statement);
+
+                    // Si el ParseStatement no consume ningun token
+                    // saltamos el token actual para evitar un bucle infinito y continuamos
+                    // 
+                    // No es necesario notificar un error, porque ya hemos intentado
+                    // hacer el parse de la expressionstatmenet
+
+                    if (Current == startToken)
+                    {
+                        NextToken();
+                    }
+                    startToken = Current;
                 }
 
             var closeBraceToken = MatchToken(SyntaxKind.CloseBraceToken);

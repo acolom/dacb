@@ -74,6 +74,22 @@ namespace Dacb.Tests.CodeAnalysis
         }
 
         [Fact]
+        public void Evaluator_BlockStatement_Reports_NoInfiniteLoop()
+        {
+             var text = @"
+                {
+                [)][]
+            ";
+
+            var diagnostics = @"
+                Unexpected token <CloseParanthesisToken>, expected <IdentifierToken>.
+                Unexpected token <EndOfFileToken>, expected <CloseBraceToken>.
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
+        [Fact]
         public void Evaluator_IfStatement_Reports_CannotConvert()
         {
             var text = @"
