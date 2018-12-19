@@ -59,6 +59,9 @@ namespace Dacb.CodeAnalysis
                 case BoundNodeKind.WhileStatement:
                     EvaluateWhileStatement((BoundWhileStatement)node);
                     break;
+                case BoundNodeKind.ForStatement:
+                    EvaluateForStatement((BoundForStatement)node);
+                    break;
                 case BoundNodeKind.ExpressionStatement:
                     EvaluateExpressionStatement((BoundExpressionStatement)node);
                     break;
@@ -95,6 +98,17 @@ namespace Dacb.CodeAnalysis
         {
             while ((bool)EvaluateExpression(node.Condition))
                 EvaluateStatement(node.BodyStatement);
+        }
+
+        private void EvaluateForStatement(BoundForStatement node)
+        {
+            var lowerbound = (int)EvaluateExpression(node.LowerBound);
+            var upperbound = (int)EvaluateExpression(node.UpperBound);
+            
+            for(var i = lowerbound; i <= upperbound; i++){
+                _variables[node.Variable] = i;
+                EvaluateStatement(node.Body);
+            }
         }
 
         private void EvaluateExpressionStatement(BoundExpressionStatement node)

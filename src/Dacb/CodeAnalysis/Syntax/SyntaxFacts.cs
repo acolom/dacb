@@ -51,10 +51,14 @@ namespace Dacb.CodeAnalysis.Syntax
                     return SyntaxKind.ElseKeyword;
                 case "false":
                     return SyntaxKind.FalseKeyword;
+                case "for":
+                    return SyntaxKind.ForKeyword;
                 case "if":
                     return SyntaxKind.IfKeyword;
                 case "let":
                     return SyntaxKind.LetKeyword;
+                case "to":
+                    return SyntaxKind.ToKeyword;
                 case "true":
                     return SyntaxKind.TrueKeyword;
                 case "var":
@@ -132,8 +136,12 @@ namespace Dacb.CodeAnalysis.Syntax
                     return  "if";
                 case SyntaxKind.ElseKeyword:
                     return  "else";
-                case SyntaxKind.WhileKeyword:
+                 case SyntaxKind.WhileKeyword:
                     return  "while";
+                case SyntaxKind.ForKeyword:
+                    return  "for";
+                case SyntaxKind.ToKeyword:
+                    return  "to";
                 case SyntaxKind.TrueKeyword:
                     return  "true";
                 case SyntaxKind.FalseKeyword:
