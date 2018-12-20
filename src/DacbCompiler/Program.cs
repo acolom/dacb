@@ -15,6 +15,7 @@ namespace dacbCompiler
         private static void Main()
         {
             var showTree = false;
+            var showProgram = false;
             var variables = new Dictionary<VariableSymbol,object>();
             var textBuilder = new StringBuilder();
             Compilation previous = null;
@@ -44,6 +45,12 @@ namespace dacbCompiler
                     {
                         showTree = !showTree;
                         Console.WriteLine(showTree ? "Show parse trees" : "Not showing parse trees");
+                        continue;
+                    }
+                    else if (input == "#showProgram")
+                    {
+                        showProgram = !showProgram;
+                        Console.WriteLine(showProgram ? "Show bound tree" : "Not showing bound tree");
                         continue;
                     }
                     else if (input == "#cls")
@@ -77,6 +84,9 @@ namespace dacbCompiler
                 {
                     syntaxTree.Root.WriteTo(Console.Out);
                 }
+
+                if (showProgram)
+                    compilation.EmitTree(Console.Out);
 
                 
                 if (!result.Diagnostics.Any())
