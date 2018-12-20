@@ -59,9 +59,10 @@ namespace Dacb.CodeAnalysis
                 case BoundNodeKind.WhileStatement:
                     EvaluateWhileStatement((BoundWhileStatement)node);
                     break;
-                case BoundNodeKind.ForStatement:
-                    EvaluateForStatement((BoundForStatement)node);
-                    break;
+                // Ya no puede aparecer nunca porque se han rescrito en el lowering a bucles while
+                // case BoundNodeKind.ForStatement:
+                //     EvaluateForStatement((BoundForStatement)node);
+                //     break;
                 case BoundNodeKind.ExpressionStatement:
                     EvaluateExpressionStatement((BoundExpressionStatement)node);
                     break;
@@ -100,16 +101,17 @@ namespace Dacb.CodeAnalysis
                 EvaluateStatement(node.Body);
         }
 
-        private void EvaluateForStatement(BoundForStatement node)
-        {
-            var lowerbound = (int)EvaluateExpression(node.LowerBound);
-            var upperbound = (int)EvaluateExpression(node.UpperBound);
+        // Ya no puede aparecer nunca porque se han rescrito en el lowering a bucles while
+        // private void EvaluateForStatement(BoundForStatement node)
+        // {
+        //     var lowerbound = (int)EvaluateExpression(node.LowerBound);
+        //     var upperbound = (int)EvaluateExpression(node.UpperBound);
             
-            for(var i = lowerbound; i <= upperbound; i++){
-                _variables[node.Variable] = i;
-                EvaluateStatement(node.Body);
-            }
-        }
+        //     for(var i = lowerbound; i <= upperbound; i++){
+        //         _variables[node.Variable] = i;
+        //         EvaluateStatement(node.Body);
+        //     }
+        // }
 
         private void EvaluateExpressionStatement(BoundExpressionStatement node)
         {
