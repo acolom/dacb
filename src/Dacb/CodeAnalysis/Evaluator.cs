@@ -97,7 +97,7 @@ namespace Dacb.CodeAnalysis
         private void EvaluateWhileStatement(BoundWhileStatement node)
         {
             while ((bool)EvaluateExpression(node.Condition))
-                EvaluateStatement(node.BodyStatement);
+                EvaluateStatement(node.Body);
         }
 
         private void EvaluateForStatement(BoundForStatement node)
@@ -126,7 +126,7 @@ namespace Dacb.CodeAnalysis
         }
         private object EvaluateAssignmentExpression(BoundAssignmentExpression a)
         {
-            var value = EvaluateExpression(a.Expresion);
+            var value = EvaluateExpression(a.Expression);
             _variables[a.Variable] = value;
             return value;
         }
