@@ -8,6 +8,9 @@ namespace Dacb.CodeAnalysis.Binding
         IfStatement,
         WhileStatement,
         ForStatement,
+        GoToStatement,
+        LabelStatement,
+        ConditionalGoToStatement,
         VariableDeclaration,
 
         //expressions

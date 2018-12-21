@@ -8,12 +8,16 @@ namespace Dacb.CodeAnalysis.Binding
         Division,
         LogicalAnd,
         LogicalOr,
+        BitwiseAnd,
+        BitwiseOr,
+        BitwiseXor,
         Equals,
         NotEquals,
         LessThan,
         LessOrEquals,
         GreaterThan,
-        GreaterOrEquals
+        GreaterOrEquals,
+        
     }
     
 }

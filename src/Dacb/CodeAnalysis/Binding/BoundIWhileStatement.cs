@@ -2,14 +2,14 @@ namespace Dacb.CodeAnalysis.Binding
 {
     internal sealed class BoundWhileStatement : BoundStatement
     {
-        public BoundWhileStatement(BoundExpression condition, BoundStatement bodyStatement)
+        public BoundWhileStatement(BoundExpression condition, BoundStatement body)
         {
             Condition = condition;
-            BodyStatement = bodyStatement;
+            Body = body;
         }
 
         public BoundExpression Condition { get; }
-        public BoundStatement BodyStatement { get; }
+        public BoundStatement Body { get; }
 
         public override BoundNodeKind Kind => BoundNodeKind.WhileStatement;
     }

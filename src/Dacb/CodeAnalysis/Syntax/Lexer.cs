@@ -81,20 +81,36 @@ namespace Dacb.CodeAnalysis.Syntax
                     _kind = SyntaxKind.CloseBraceToken;
                     _position++;
                     break;
+                case '~':
+                    _kind = SyntaxKind.TildeToken;
+                    _position++;
+                    break;
+                case '^':
+                    _kind = SyntaxKind.HatToken;
+                    _position++;
+                    break;
                 case '&':
                 {
-                    _position++;
-                    if (Current == '&')
+                     _position++;
+                    if (Current != '&')
                     {
-                        _kind = SyntaxKind.AmpsersandAmpsersandToken;
+                        _kind = SyntaxKind.AmpersandToken;
+                    }
+                    else
+                    {
+                        _kind = SyntaxKind.AmpersandAmpersandToken;
                         _position++;
                     }
                     break;
                 }
                 case '|':
                 {
-                    _position++;
-                    if (Current == '|')
+                     _position++;
+                    if (Current != '|')
+                    {
+                        _kind = SyntaxKind.PipeToken;
+                    }
+                    else
                     {
                         _kind = SyntaxKind.PipePipeToken;
                         _position++;

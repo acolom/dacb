@@ -2,6 +2,7 @@ namespace Dacb.CodeAnalysis.Syntax
 {
     public enum SyntaxKind 
     {
+
         //tokens
         BadToken,
         EndOfFileToken,
@@ -13,8 +14,12 @@ namespace Dacb.CodeAnalysis.Syntax
         SlashToken,
         BangToken,
         EqualsToken,
-        AmpsersandAmpsersandToken,
+        AmpersandToken,
+        AmpersandAmpersandToken,
+        PipeToken,
         PipePipeToken,
+        TildeToken,
+        HatToken,
         EqualsEqualsToken,
         BangEqualsToken,
         LessToken,

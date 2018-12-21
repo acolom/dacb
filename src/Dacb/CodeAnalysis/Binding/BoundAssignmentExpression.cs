@@ -7,12 +7,12 @@ namespace Dacb.CodeAnalysis.Binding
         public BoundAssignmentExpression(VariableSymbol variable, BoundExpression expresion)
         {
             Variable = variable;
-            Expresion = expresion;
+            Expression = expresion;
         }
         
         public VariableSymbol Variable { get; }
-        public BoundExpression Expresion { get; }
-        public override Type Type => Expresion.Type;
+        public BoundExpression Expression { get; }
+        public override Type Type => Expression.Type;
         public override BoundNodeKind Kind => BoundNodeKind.AssignmentExpression;
     }
 }
