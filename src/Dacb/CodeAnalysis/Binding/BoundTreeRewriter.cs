@@ -112,7 +112,7 @@ namespace Dacb.CodeAnalysis.Binding
             var condition = RewriteExpression(node.Condition);
             if (condition == node.Condition)
                 return node;
-            return new BoundConditionalGoToStatement(node.Label, condition, node.JumpIfFalse);
+            return new BoundConditionalGoToStatement(node.Label, condition, node.JumpIfTrue);
         }
 
         protected virtual BoundStatement RewriteGoToStatement(BoundGoToStatement node)

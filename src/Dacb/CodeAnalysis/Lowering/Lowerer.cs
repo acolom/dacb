@@ -65,7 +65,7 @@ namespace Dacb.CodeAnalysis.Lowering
                 // <body>
                 // end;
                 var endLabel = GenerateLabel();
-                var goToFalse = new BoundConditionalGoToStatement(endLabel, node.Condition, true);
+                var goToFalse = new BoundConditionalGoToStatement(endLabel, node.Condition, false);
                 var endLabelStatement = new BoundLabelStatement(endLabel);
                 
                 var result = new BoundBlockStatement(ImmutableArray.Create<BoundStatement>(goToFalse, node.ThenStatement, endLabelStatement));
@@ -90,7 +90,7 @@ namespace Dacb.CodeAnalysis.Lowering
                 var elseLabel = GenerateLabel();
                 var endLabel = GenerateLabel();
                 
-                var goToFalse = new BoundConditionalGoToStatement(elseLabel, node.Condition, true);
+                var goToFalse = new BoundConditionalGoToStatement(elseLabel, node.Condition, false);
                 var goToEndStatment = new BoundGoToStatement(endLabel);
                 var elseLabelStatement = new BoundLabelStatement(elseLabel);
                 var endLabelStatement = new BoundLabelStatement(endLabel);
@@ -128,7 +128,7 @@ namespace Dacb.CodeAnalysis.Lowering
             var goToCheck = new BoundGoToStatement(checkLabel);
             var continueLabelStatement = new BoundLabelStatement(continueLabel);
             var checkLabelStatement = new BoundLabelStatement(checkLabel);
-            var goToContinue = new BoundConditionalGoToStatement(continueLabel, node.Condition, false);
+            var goToTrue = new BoundConditionalGoToStatement(continueLabel, node.Condition);
             var endLabelStatement = new BoundLabelStatement(endLabel);
 
             var result = new BoundBlockStatement(ImmutableArray.Create<BoundStatement>(
@@ -136,7 +136,7 @@ namespace Dacb.CodeAnalysis.Lowering
                 continueLabelStatement,
                 node.Body,
                 checkLabelStatement,
-                goToContinue,
+                goToTrue,
                 endLabelStatement
                 )
             );
