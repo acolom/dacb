@@ -151,7 +151,8 @@ namespace Dacb.CodeAnalysis.Lowering
             //  ----->
             // {
             //      var <var> = <lower>
-            //      while (<var> <= <upper>)
+            //      let upperBound = <upper>
+            //      while (<var> <= upperBound)
             //      {
             //          <body>
             //          <var> = <var> + 1    
@@ -160,10 +161,14 @@ namespace Dacb.CodeAnalysis.Lowering
 
             var variableDeclaration = new BoundVariableDeclaration(node.Variable, node.LowerBound);
             var variableExpression = new BoundVariableExpression(node.Variable);
+
+            var upperBoundSymbol = new VariableSymbol("upperBound", true, typeof(int));
+            var upperBoundDeclaration = new BoundVariableDeclaration(upperBoundSymbol, node.UpperBound);
+
             var condition = new BoundBinaryExpression(
                 variableExpression, 
                 BoundBinaryOperator.Bind(SyntaxKind.LessOrEqualsToken, typeof(int), typeof(int)),
-                node.UpperBound
+                new BoundVariableExpression(upperBoundSymbol)
             );
 
             var increment = new BoundExpressionStatement(
@@ -180,7 +185,11 @@ namespace Dacb.CodeAnalysis.Lowering
             var whileBody = new BoundBlockStatement(ImmutableArray.Create<BoundStatement>(node.Body, increment) );
             var whileStatement = new BoundWhileStatement(condition, whileBody);
 
-            var result = new BoundBlockStatement(ImmutableArray.Create<BoundStatement>(variableDeclaration, whileStatement) );
+            var result = new BoundBlockStatement(ImmutableArray.Create<BoundStatement>(
+                variableDeclaration, 
+                upperBoundDeclaration,
+                whileStatement) 
+            );
             return RewriteStatement(result);
         }
 
