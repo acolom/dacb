@@ -13,7 +13,6 @@ namespace Dacb.CodeAnalysis.Binding
         public BoundExpression Condition { get; }
         public BoundStatement ThenStatement { get; }
         public BoundStatement ElseStatement { get; }
-
         
     }
 }

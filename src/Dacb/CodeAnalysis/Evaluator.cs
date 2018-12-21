@@ -7,12 +7,12 @@ namespace Dacb.CodeAnalysis
 
     internal sealed class Evaluator
     {
-        private readonly BoundStatement _root;
+        private readonly BoundBlockStatement _root;
         private readonly Dictionary<VariableSymbol, object> _variables;
 
         private object _lastValue;
 
-        public Evaluator(BoundStatement root, Dictionary<VariableSymbol, object> variables)
+        public Evaluator(BoundBlockStatement root, Dictionary<VariableSymbol, object> variables)
         {
             _root = root;
             _variables = variables;
@@ -20,7 +20,62 @@ namespace Dacb.CodeAnalysis
 
         public object Evaluate()
         {
-            EvaluateStatement(_root);
+            var labelToIndex = new Dictionary<LabelSymbol, int>();
+            for(var i = 0; i < _root.Statements.Length; i++)
+            {
+                if (_root.Statements[i] is BoundLabelStatement l)
+                    labelToIndex.Add(l.Label, i + 1);
+            }
+
+            var index = 0;
+            while(index < _root.Statements.Length)
+            {
+                var s = _root.Statements[index];
+                switch (s.Kind)
+                {
+                    // case BoundNodeKind.BlockStatement:
+                    //     EvaluateBlockStatement((BoundBlockStatement)node);
+                    //     break;
+                    case BoundNodeKind.VariableDeclaration:
+                        EvaluateVariableDeclaration((BoundVariableDeclaration)s);
+                        index++;
+                        break;
+                    // case BoundNodeKind.IfStatement:
+                    //     EvaluateIfStatement((BoundIfStatement)node);
+                    //     break;
+                    // case BoundNodeKind.WhileStatement:
+                    //     EvaluateWhileStatement((BoundWhileStatement)node);
+                    //     break;
+                    // Ya no puede aparecer nunca porque se han rescrito en el lowering a bucles while
+                    // case BoundNodeKind.ForStatement:
+                    //     EvaluateForStatement((BoundForStatement)node);
+                    //     break;
+                    case BoundNodeKind.ExpressionStatement:
+                        EvaluateExpressionStatement((BoundExpressionStatement)s);
+                        index++;
+                        break;
+                    case BoundNodeKind.ConditionalGoToStatement:
+                        var cgs = (BoundConditionalGoToStatement)s;
+
+                        var condition = (bool)EvaluateExpression(cgs.Condition);
+
+                        if (condition && !cgs.JumpIfFalse ||
+                            !condition && cgs.JumpIfFalse) 
+                            index = labelToIndex[cgs.Label];
+                        else
+                            index++;
+                        break;
+                    case BoundNodeKind.LabelStatement:
+                    index++;
+                        break;
+                    case BoundNodeKind.GoToStatement:
+                        index = labelToIndex[((BoundGoToStatement)s).Label]; 
+                        break;
+                    default:
+                        throw new Exception($"Unexpected node: {s.Kind}");
+                }
+            }
+
             return _lastValue;
         }
 
@@ -43,42 +98,6 @@ namespace Dacb.CodeAnalysis
             }
         }
 
-        private void EvaluateStatement(BoundStatement node)
-        {
-            switch (node.Kind)
-            {
-                case BoundNodeKind.BlockStatement:
-                    EvaluateBlockStatement((BoundBlockStatement)node);
-                    break;
-                case BoundNodeKind.VariableDeclaration:
-                    EvaluateVariableDeclaration((BoundVariableDeclaration)node);
-                    break;
-                case BoundNodeKind.IfStatement:
-                    EvaluateIfStatement((BoundIfStatement)node);
-                    break;
-                case BoundNodeKind.WhileStatement:
-                    EvaluateWhileStatement((BoundWhileStatement)node);
-                    break;
-                // Ya no puede aparecer nunca porque se han rescrito en el lowering a bucles while
-                // case BoundNodeKind.ForStatement:
-                //     EvaluateForStatement((BoundForStatement)node);
-                //     break;
-                case BoundNodeKind.ExpressionStatement:
-                    EvaluateExpressionStatement((BoundExpressionStatement)node);
-                    break;
-                default:
-                    throw new Exception($"Unexpected node: {node.Kind}");
-            }
-        }
-
-        private void EvaluateBlockStatement(BoundBlockStatement node)
-        {
-            foreach (var statement in node.Statements)
-            {
-                EvaluateStatement(statement);
-            }
-        }
-        
         private void EvaluateVariableDeclaration(BoundVariableDeclaration node)
         {
             var value = EvaluateExpression(node.Initializer);
@@ -86,32 +105,6 @@ namespace Dacb.CodeAnalysis
 
             _lastValue = value;
         }
-        private void EvaluateIfStatement(BoundIfStatement node)
-        {
-            var condition = (bool)EvaluateExpression(node.Condition);
-            if (condition)
-                EvaluateStatement(node.ThenStatement);
-            else if (node.ElseStatement != null)
-                EvaluateStatement(node.ElseStatement);
-        }
-
-        private void EvaluateWhileStatement(BoundWhileStatement node)
-        {
-            while ((bool)EvaluateExpression(node.Condition))
-                EvaluateStatement(node.Body);
-        }
-
-        // Ya no puede aparecer nunca porque se han rescrito en el lowering a bucles while
-        // private void EvaluateForStatement(BoundForStatement node)
-        // {
-        //     var lowerbound = (int)EvaluateExpression(node.LowerBound);
-        //     var upperbound = (int)EvaluateExpression(node.UpperBound);
-            
-        //     for(var i = lowerbound; i <= upperbound; i++){
-        //         _variables[node.Variable] = i;
-        //         EvaluateStatement(node.Body);
-        //     }
-        // }
 
         private void EvaluateExpressionStatement(BoundExpressionStatement node)
         {

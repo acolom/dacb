@@ -14,12 +14,135 @@ namespace Dacb.CodeAnalysis.Lowering
             
         }
 
-        public static BoundStatement Lower(BoundStatement statement)
+        private int _labelCount;
+
+        private LabelSymbol GenerateLabel()
+        {
+            var name = $"Label_{++_labelCount}";
+            return new LabelSymbol(name);
+        }
+        public static BoundBlockStatement Lower(BoundStatement statement)
         {
             var lowerer = new Lowerer();
-            return lowerer.RewriteStatement(statement);
+            var result = lowerer.RewriteStatement(statement);
+            return Flatten(result);
         }
 
+        private static BoundBlockStatement Flatten(BoundStatement statement)
+        {
+            var builder = ImmutableArray.CreateBuilder<BoundStatement>();
+            var stack = new Stack<BoundStatement>();
+
+            stack.Push(statement);
+
+            while (stack.Count > 0)
+            {
+                var current = stack.Pop();
+                if (current is BoundBlockStatement b)
+                {
+                    foreach(var s in b.Statements.Reverse())
+                        stack.Push(s);
+                }
+                else 
+                {
+                    builder.Add(current);
+                }
+            }
+
+            return new BoundBlockStatement(builder.ToImmutable());
+        }
+
+        protected override BoundStatement RewriteIfStatement(BoundIfStatement node)
+        {
+            if (node.ElseStatement == null)
+            {
+                // if <condtion> 
+                //      <then>
+                //
+                // ----->
+                // 
+                // goToIfFalse <condition> end;
+                // <body>
+                // end;
+                var endLabel = GenerateLabel();
+                var goToFalse = new BoundConditionalGoToStatement(endLabel, node.Condition, true);
+                var endLabelStatement = new BoundLabelStatement(endLabel);
+                
+                var result = new BoundBlockStatement(ImmutableArray.Create<BoundStatement>(goToFalse, node.ThenStatement, endLabelStatement));
+                return RewriteStatement(result);
+            }
+            else
+            {
+                // if <condtion> 
+                //      <then>
+                // else
+                //      <else>
+                //
+                // ----->
+                //
+                // goToIfFalse <condition> else;
+                // <then>
+                // goTo end
+                // else;
+                // <else>
+                // end;
+
+                var elseLabel = GenerateLabel();
+                var endLabel = GenerateLabel();
+                
+                var goToFalse = new BoundConditionalGoToStatement(elseLabel, node.Condition, true);
+                var goToEndStatment = new BoundGoToStatement(endLabel);
+                var elseLabelStatement = new BoundLabelStatement(elseLabel);
+                var endLabelStatement = new BoundLabelStatement(endLabel);
+
+                var result = new BoundBlockStatement(ImmutableArray.Create<BoundStatement>(
+                    goToFalse, 
+                    node.ThenStatement, 
+                    goToEndStatment,
+                    elseLabelStatement,
+                    node.ElseStatement,
+                    endLabelStatement)
+                );
+                return RewriteStatement(result);
+            }
+
+        }
+        protected override BoundStatement RewriteWhileStatement(BoundWhileStatement node)
+        {
+            // while <condition>
+            //    <body>
+            //
+            // ------>
+            //
+            // gotoCheck
+            // continue;
+            // <body>
+            // check
+            // gotoTrue <condition> continue;
+            // end; 
+
+            var continueLabel = GenerateLabel();
+            var checkLabel = GenerateLabel();
+            var endLabel = GenerateLabel();
+            
+            var goToCheck = new BoundGoToStatement(checkLabel);
+            var continueLabelStatement = new BoundLabelStatement(continueLabel);
+            var checkLabelStatement = new BoundLabelStatement(checkLabel);
+            var goToContinue = new BoundConditionalGoToStatement(continueLabel, node.Condition, false);
+            var endLabelStatement = new BoundLabelStatement(endLabel);
+
+            var result = new BoundBlockStatement(ImmutableArray.Create<BoundStatement>(
+                goToCheck,
+                continueLabelStatement,
+                node.Body,
+                checkLabelStatement,
+                goToContinue,
+                endLabelStatement
+                )
+            );
+            return RewriteStatement(result);
+
+        }
         protected override BoundStatement RewriteForStatement(BoundForStatement node)
         {
             // for <var> = <lower> to <upper>

@@ -20,6 +20,12 @@ namespace Dacb.CodeAnalysis.Binding
                     return RewriteWhileStatement((BoundWhileStatement)node);
                 case BoundNodeKind.ForStatement:
                     return RewriteForStatement((BoundForStatement)node);
+                case BoundNodeKind.LabelStatement:
+                    return RewriteLabelStatement((BoundLabelStatement)node);
+                case BoundNodeKind.GoToStatement:
+                    return RewriteGoToStatement((BoundGoToStatement)node);
+                case BoundNodeKind.ConditionalGoToStatement:
+                    return RewriteConditionalGoToStatement((BoundConditionalGoToStatement)node);                    
                 case BoundNodeKind.VariableDeclaration:
                     return RewriteVariableDeclaration((BoundVariableDeclaration)node);
                 default:
@@ -99,6 +105,24 @@ namespace Dacb.CodeAnalysis.Binding
                 return node;
             
             return new BoundForStatement(node.Variable, lowerBound, upperBound, body);    
+        }
+
+        protected virtual BoundStatement RewriteConditionalGoToStatement(BoundConditionalGoToStatement node)
+        {
+            var condition = RewriteExpression(node.Condition);
+            if (condition == node.Condition)
+                return node;
+            return new BoundConditionalGoToStatement(node.Label, condition, node.JumpIfFalse);
+        }
+
+        protected virtual BoundStatement RewriteGoToStatement(BoundGoToStatement node)
+        {
+            return node;
+        }
+
+        protected virtual BoundStatement RewriteLabelStatement(BoundLabelStatement node)
+        {
+            return node;
         }
 
         protected virtual BoundStatement RewriteVariableDeclaration(BoundVariableDeclaration node)
