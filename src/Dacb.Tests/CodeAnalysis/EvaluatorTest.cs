@@ -18,6 +18,8 @@ namespace Dacb.Tests.CodeAnalysis
         [InlineData("12 - 3", 9)]
         [InlineData("4 * 2", 8)]
         [InlineData("9 / 3", 3)]
+        [InlineData("9 % 3", 0)]
+        [InlineData("9 % 2", 1)]
         [InlineData("(10)", 10)]
         [InlineData("12 == 12", true)]
         [InlineData("12 == 3", false)]
@@ -72,6 +74,7 @@ namespace Dacb.Tests.CodeAnalysis
         [InlineData("{ var result = 0 for i = 0 to 10 { result = result + i } result}", 55)]
         [InlineData("{ var result = 0 for i = 0 to 10 result = result + i  result}", 55)]
         [InlineData("{ var a = 10 for i = 1 to (a = a -1) {} a }", 9)]
+        [InlineData("{ var a = 11 var b = 2 var c = a % b c }", 1)]
         public void Evaluator_Computes_CorrectValues(string text, object expectedValue)
         {
             AssertValue(text, expectedValue);

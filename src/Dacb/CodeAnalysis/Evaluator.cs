@@ -156,7 +156,11 @@ namespace Dacb.CodeAnalysis
                 case BoundBinaryOperatorKind.Multiplication:
                     return (int)left * (int)right;
                 case BoundBinaryOperatorKind.Division:
+                
                     return (int)left / (int)right;
+                case BoundBinaryOperatorKind.Remainder:
+                    return (int)left % (int)right;
+
                 case BoundBinaryOperatorKind.BitwiseAnd:
                     if (b.Type == typeof(int))
                         return (int)left & (int)right;

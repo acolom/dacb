@@ -65,6 +65,10 @@ namespace Dacb.CodeAnalysis.Syntax
                     _kind = SyntaxKind.SlashToken;
                     _position++;
                     break;
+                case '%':
+                    _kind = SyntaxKind.PercentageToken;
+                    _position++;
+                    break;
                 case '(':
                     _kind = SyntaxKind.OpenParanthesisToken;
                     _position++;

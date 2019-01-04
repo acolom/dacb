@@ -6,6 +6,7 @@ namespace Dacb.CodeAnalysis.Binding
         Substraction,
         Multiplication,
         Division,
+        Remainder,
         LogicalAnd,
         LogicalOr,
         BitwiseAnd,

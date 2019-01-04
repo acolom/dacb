@@ -13,7 +13,7 @@ namespace Dacb.CodeAnalysis.Syntax
                 case SyntaxKind.MinusToken:
                 case SyntaxKind.BangToken:
                 case SyntaxKind.TildeToken:
-                    return 6;
+                    return 8;
                 default:
                     return 0;
             }
@@ -22,8 +22,11 @@ namespace Dacb.CodeAnalysis.Syntax
         {
             switch(kind)
             {
-                case SyntaxKind.StarToken:
                 case SyntaxKind.SlashToken:
+                    return 7;
+                case SyntaxKind.PercentageToken:
+                    return 6;
+                case SyntaxKind.StarToken:
                     return 5;
                 case SyntaxKind.PlusToken:
                 case SyntaxKind.MinusToken:
@@ -108,6 +111,8 @@ namespace Dacb.CodeAnalysis.Syntax
                     return  "*";
                 case SyntaxKind.SlashToken: 
                     return  "/";
+                case SyntaxKind.PercentageToken: 
+                    return  "%";
                 case SyntaxKind.BangToken: 
                     return  "!";
                 case SyntaxKind.EqualsToken: 

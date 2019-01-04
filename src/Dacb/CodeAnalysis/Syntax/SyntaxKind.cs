@@ -12,6 +12,7 @@ namespace Dacb.CodeAnalysis.Syntax
         MinusToken,
         StarToken,
         SlashToken,
+        PercentageToken,
         BangToken,
         EqualsToken,
         AmpersandToken,
@@ -63,6 +64,6 @@ namespace Dacb.CodeAnalysis.Syntax
         BinaryExpression,
         ParenthesizedExpression,
         AssignmentExpression,
-        
+
     }
 }
