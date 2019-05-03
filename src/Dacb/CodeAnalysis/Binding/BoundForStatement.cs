@@ -1,3 +1,5 @@
+using Dacb.CodeAnalysis.Symbols;
+
 namespace Dacb.CodeAnalysis.Binding
 {
     internal sealed class BoundForStatement : BoundStatement

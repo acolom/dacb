@@ -1,6 +1,6 @@
 using System;
 
-namespace Dacb.CodeAnalysis
+namespace Dacb.CodeAnalysis.Symbols
 {
     public sealed class VariableSymbol
     {

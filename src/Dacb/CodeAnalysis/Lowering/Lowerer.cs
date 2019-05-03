@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Dacb.CodeAnalysis.Binding;
+using Dacb.CodeAnalysis.Symbols;
 using Dacb.CodeAnalysis.Syntax;
 
 namespace Dacb.CodeAnalysis.Lowering

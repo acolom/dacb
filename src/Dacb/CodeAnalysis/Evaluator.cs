@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Dacb.CodeAnalysis.Binding;
+using Dacb.CodeAnalysis.Symbols;
 
 namespace Dacb.CodeAnalysis
 {

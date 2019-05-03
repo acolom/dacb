@@ -1,4 +1,5 @@
 using System;
+using Dacb.CodeAnalysis.Symbols;
 
 namespace Dacb.CodeAnalysis.Binding
 {
