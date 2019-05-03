@@ -16,10 +16,10 @@ namespace Dacb.CodeAnalysis.Lowering
 
         private int _labelCount;
 
-        private LabelSymbol GenerateLabel()
+        private BoundLabel GenerateLabel()
         {
             var name = $"Label_{++_labelCount}";
-            return new LabelSymbol(name);
+            return new BoundLabel(name);
         }
         public static BoundBlockStatement Lower(BoundStatement statement)
         {
