@@ -26,7 +26,7 @@ namespace dacbCompiler
 
                 if (isKeyword)
                     Console.ForegroundColor = ConsoleColor.Blue;
-                if (isIdentifier)
+                else if (isIdentifier)
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                 else if (isNumber)
                     Console.ForegroundColor = ConsoleColor.Cyan;
