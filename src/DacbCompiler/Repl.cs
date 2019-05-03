@@ -299,8 +299,18 @@ namespace dacbCompiler
             var start = view.CurrentCharacter;
             var line = document[lineIndex];
 
-            if (start > line.Length - 1)
+            if (start >= line.Length)
+            {
+                if (view.CurrentLine == document.Count - 1)
+                {
+                    return;
+                }
+
+                var nextLine = document[view.CurrentLine + 1];
+                document[view.CurrentLine] += nextLine;
+                document.RemoveAt(view.CurrentLine + 1);
                 return;
+            }
             
             var before = line.Substring(0, start);
             var after = line.Substring(start + 1);
