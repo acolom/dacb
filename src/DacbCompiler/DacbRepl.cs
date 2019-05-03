@@ -94,7 +94,7 @@ namespace dacbCompiler
                     Console.WriteLine();
 
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.Write($"{lineNumber}, {character}: ");
+                    Console.Write($"({lineNumber}, {character}): ");
                     Console.WriteLine(diagnostic);
                     Console.ResetColor();
 
@@ -129,9 +129,9 @@ namespace dacbCompiler
 
             var syntaxTree = SyntaxTree.Parse(text);
 
-            if (syntaxTree.Diagnostics.Any())
+            if (syntaxTree.Root.Statement.GetLastToken().IsMissing)
                 return false;
-            
+
             return true;
         }
 
