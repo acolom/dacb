@@ -139,6 +139,8 @@ namespace Dacb.CodeAnalysis.Binding
         {
             switch(node.Kind)
             {
+                case BoundNodeKind.ErrorExpression: 
+                    return RewriteErrorExpression((BoundErrorExpression)node);
                 case BoundNodeKind.LiteralExpression: 
                     return RewriteLiteralExpression((BoundLiteralExpression)node);
                 case BoundNodeKind.VariableExpression: 
@@ -154,6 +156,10 @@ namespace Dacb.CodeAnalysis.Binding
             }
         }
 
+        protected virtual BoundExpression RewriteErrorExpression(BoundErrorExpression node)
+        {
+            return node;
+        }
         protected virtual BoundExpression RewriteLiteralExpression(BoundLiteralExpression node)
         {
             return node;

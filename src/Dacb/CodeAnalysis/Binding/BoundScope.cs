@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using Dacb.CodeAnalysis.Symbols;
 
 namespace Dacb.CodeAnalysis.Binding
 {

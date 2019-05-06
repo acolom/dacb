@@ -1,4 +1,5 @@
 using System;
+using Dacb.CodeAnalysis.Symbols;
 
 namespace Dacb.CodeAnalysis.Binding
 {
@@ -9,7 +10,7 @@ namespace Dacb.CodeAnalysis.Binding
             Variable = variable;
         }
 
-        public override Type Type => Variable.Type;
+        public override TypeSymbol Type => Variable.Type;
 
         public override BoundNodeKind Kind => BoundNodeKind.VariableExpression;
 

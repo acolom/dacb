@@ -276,7 +276,7 @@ namespace dacbCompiler
                 var previousLine = document[view.CurrentLine - 1];
 
                 document.RemoveAt(view.CurrentLine);
-                view.CurrentLine --;
+                view.CurrentLine--;
                 document[view.CurrentLine] = previousLine + currentLine;
                 view.CurrentCharacter = previousLine.Length;
             }
@@ -299,8 +299,18 @@ namespace dacbCompiler
             var start = view.CurrentCharacter;
             var line = document[lineIndex];
 
-            if (start > line.Length - 1)
+            if (start >= line.Length)
+            {
+                if (view.CurrentLine == document.Count - 1)
+                {
+                    return;
+                }
+
+                var nextLine = document[view.CurrentLine + 1];
+                document[view.CurrentLine] += nextLine;
+                document.RemoveAt(view.CurrentLine + 1);
                 return;
+            }
             
             var before = line.Substring(0, start);
             var after = line.Substring(start + 1);
@@ -351,6 +361,9 @@ namespace dacbCompiler
 
         private void UpdateDocumentFromHistory(ObservableCollection<string> document, SubmissionView view)
         {
+            if (_submissionHistory.Count == 0)
+                return;
+
             document.Clear();
 
             var historyItem = _submissionHistory[_submissionHistoryIndex];

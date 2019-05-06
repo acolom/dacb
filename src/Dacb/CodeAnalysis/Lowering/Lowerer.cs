@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Dacb.CodeAnalysis.Binding;
+using Dacb.CodeAnalysis.Symbols;
 using Dacb.CodeAnalysis.Syntax;
 
 namespace Dacb.CodeAnalysis.Lowering
@@ -16,10 +17,10 @@ namespace Dacb.CodeAnalysis.Lowering
 
         private int _labelCount;
 
-        private LabelSymbol GenerateLabel()
+        private BoundLabel GenerateLabel()
         {
             var name = $"Label_{++_labelCount}";
-            return new LabelSymbol(name);
+            return new BoundLabel(name);
         }
         public static BoundBlockStatement Lower(BoundStatement statement)
         {
@@ -162,12 +163,12 @@ namespace Dacb.CodeAnalysis.Lowering
             var variableDeclaration = new BoundVariableDeclaration(node.Variable, node.LowerBound);
             var variableExpression = new BoundVariableExpression(node.Variable);
 
-            var upperBoundSymbol = new VariableSymbol("upperBound", true, typeof(int));
+            var upperBoundSymbol = new VariableSymbol("upperBound", true, TypeSymbol.Int);
             var upperBoundDeclaration = new BoundVariableDeclaration(upperBoundSymbol, node.UpperBound);
 
             var condition = new BoundBinaryExpression(
                 variableExpression, 
-                BoundBinaryOperator.Bind(SyntaxKind.LessOrEqualsToken, typeof(int), typeof(int)),
+                BoundBinaryOperator.Bind(SyntaxKind.LessOrEqualsToken, TypeSymbol.Int, TypeSymbol.Int),
                 new BoundVariableExpression(upperBoundSymbol)
             );
 
@@ -176,7 +177,7 @@ namespace Dacb.CodeAnalysis.Lowering
                     node.Variable, 
                     new BoundBinaryExpression(
                         variableExpression,
-                        BoundBinaryOperator.Bind(SyntaxKind.PlusToken, typeof(int), typeof(int)),
+                        BoundBinaryOperator.Bind(SyntaxKind.PlusToken, TypeSymbol.Int, TypeSymbol.Int),
                         new BoundLiteralExpression(1)
                     )
                 )

@@ -42,6 +42,15 @@ namespace Dacb.CodeAnalysis.Syntax
             }
         }
 
+        public SyntaxToken GetLastToken()
+        {
+            if (this is SyntaxToken token)
+                return token;
+            
+            // A syntax token siempre tendra que tener al menos un token ya que los nodos se construyen de tokens
+            // recursivamente nos vamos llamando hasta encontrar el ultimo
+            return GetChildren().Last().GetLastToken();
+        }
         public void WriteTo(TextWriter textWriter)
         {
             PrettyPrint(textWriter, this);

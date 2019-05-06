@@ -8,6 +8,7 @@ namespace Dacb.CodeAnalysis.Syntax
         EndOfFileToken,
         WhitespaceToken,
         NumberToken,
+        StringToken,
         PlusToken,
         MinusToken,
         StarToken,
@@ -64,6 +65,6 @@ namespace Dacb.CodeAnalysis.Syntax
         BinaryExpression,
         ParenthesizedExpression,
         AssignmentExpression,
-
+        
     }
 }

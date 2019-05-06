@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Dacb.CodeAnalysis;
+using Dacb.CodeAnalysis.Symbols;
 using Dacb.CodeAnalysis.Syntax;
 using Xunit;
 
@@ -128,7 +129,7 @@ namespace Dacb.Tests.CodeAnalysis
             }";
 
             var diagnostics = @"
-                Cannot convert type 'System.Int32' to type 'System.Boolean'.
+                Cannot convert type 'int' to type 'bool'.
             ";
 
             AssertDiagnostics(text, diagnostics);
@@ -145,7 +146,7 @@ namespace Dacb.Tests.CodeAnalysis
             }";
 
             var diagnostics = @"
-                Cannot convert type 'System.Int32' to type 'System.Boolean'.
+                Cannot convert type 'int' to type 'bool'.
             ";
 
             AssertDiagnostics(text, diagnostics);
@@ -162,7 +163,7 @@ namespace Dacb.Tests.CodeAnalysis
             }";
 
             var diagnostics = @"
-                Cannot convert type 'System.Boolean' to type 'System.Int32'.
+                Cannot convert type 'bool' to type 'int'.
             ";
 
             AssertDiagnostics(text, diagnostics);
@@ -179,7 +180,7 @@ namespace Dacb.Tests.CodeAnalysis
             }";
 
             var diagnostics = @"
-                Cannot convert type 'System.Boolean' to type 'System.Int32'.
+                Cannot convert type 'bool' to type 'int'.
             ";
 
             AssertDiagnostics(text, diagnostics);
@@ -191,7 +192,7 @@ namespace Dacb.Tests.CodeAnalysis
             var text = @"[+]true";
 
             var diagnostics = @"
-                Unary operator '+' is not defined for type 'System.Boolean'.
+                Unary operator '+' is not defined for type 'bool'.
             ";
 
             AssertDiagnostics(text, diagnostics);
@@ -203,7 +204,7 @@ namespace Dacb.Tests.CodeAnalysis
             var text = @"100 [+]true";
 
             var diagnostics = @"
-                Binary operator '+' is not defined for types 'System.Int32' and 'System.Boolean'.
+                Binary operator '+' is not defined for types 'int' and 'bool'.
             ";
 
             AssertDiagnostics(text, diagnostics);
@@ -272,7 +273,7 @@ namespace Dacb.Tests.CodeAnalysis
             }";
 
             var diagnostics = @"
-                Cannot convert type 'System.Boolean' to type 'System.Int32'.
+                Cannot convert type 'bool' to type 'int'.
             ";
 
             AssertDiagnostics(text, diagnostics);
