@@ -199,12 +199,12 @@ namespace Dacb.CodeAnalysis.Binding
             {
                 // Esto siginifica que el parser inserto el token
                 // el error ya se reporto asi que podriamos devolver un error expression
-                return new BoundLiteralExpression(0);
+                return new BoundErrorExpression();
             }
             if (!_scope.TryLookup(name, out var variable))
             {
                 _diagnostics.ReportUndefinedName(syntax.IdentifierToken.Span, name);
-                return new BoundLiteralExpression(0);
+                return new BoundErrorExpression();
             }
 
             //acm de momento
@@ -240,11 +240,15 @@ namespace Dacb.CodeAnalysis.Binding
         private BoundExpression BindUnaryExpression(UnaryExpressionSyntax syntax)
         {
             var boundOperand = BindExpression(syntax.Operand);
+            
+            if (boundOperand.Type == TypeSymbol.Error)
+                return new BoundErrorExpression();
+            
             var boundOperator = BoundUnaryOperator.Bind(syntax.OperatorToken.Kind, boundOperand.Type);
             if (boundOperator == null)
             {
                 _diagnostics.ReportUndefinedUnaryOperator(syntax.OperatorToken.Span, syntax.OperatorToken.Text, boundOperand.Type);
-                return boundOperand;
+                return new BoundErrorExpression();
             }
             return new BoundUnaryExpression(boundOperator, boundOperand);
         }
@@ -255,10 +259,13 @@ namespace Dacb.CodeAnalysis.Binding
             var boundRight = BindExpression(syntax.Right);
             var boundOperator = BoundBinaryOperator.Bind(syntax.OperatorToken.Kind, boundLeft.Type, boundRight.Type);
 
+            if (boundLeft.Type == TypeSymbol.Error || boundRight.Type == TypeSymbol.Error)
+                return new BoundErrorExpression();
+
             if (boundOperator == null)
             {
                 _diagnostics.ReportUndefinedBinaryOperator(syntax.OperatorToken.Span, syntax.OperatorToken.Text, boundLeft.Type, boundRight.Type);
-                return boundLeft;
+                return new BoundErrorExpression();
             }
 
             return new BoundBinaryExpression(boundLeft, boundOperator, boundRight);

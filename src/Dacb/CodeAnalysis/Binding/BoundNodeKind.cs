@@ -14,12 +14,13 @@ namespace Dacb.CodeAnalysis.Binding
         VariableDeclaration,
 
         //expressions
+        ErrorExpression,
+
         VariableExpression,
         AssignmentExpression,
         UnaryExpression,
         LiteralExpression,
         BinaryExpression,
-        
     }
     
 }
