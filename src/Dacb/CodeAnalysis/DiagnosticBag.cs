@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Dacb.CodeAnalysis.Symbols;
 using Dacb.CodeAnalysis.Syntax;
 using Dacb.CodeAnalysis.Text;
 
@@ -50,13 +51,13 @@ namespace Dacb.CodeAnalysis
             Report(span, message);
         }
 
-        public void ReportUndefinedUnaryOperator(TextSpan span, string operatorText, Type operandType)
+        public void ReportUndefinedUnaryOperator(TextSpan span, string operatorText, TypeSymbol operandType)
         {
             var message =  $"Unary operator '{operatorText}' is not defined for type '{operandType}'.";
             Report(span, message);
         }
 
-        public void ReportUndefinedBinaryOperator(TextSpan span, string operatorText, Type leftType, Type rightType)
+        public void ReportUndefinedBinaryOperator(TextSpan span, string operatorText, TypeSymbol leftType, TypeSymbol rightType)
         {
             var message = $"Binary operator '{operatorText}' is not defined for types '{leftType}' and '{rightType}'.";
             Report(span, message);
@@ -74,7 +75,7 @@ namespace Dacb.CodeAnalysis
             Report(span, message);
         }
 
-        public void ReportCannotConvert(TextSpan span, Type fromType, Type toType)
+        public void ReportCannotConvert(TextSpan span, TypeSymbol fromType, TypeSymbol toType)
         {
             var message = $"Cannot convert type '{fromType}' to type '{toType}'.";
             Report(span, message);
