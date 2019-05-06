@@ -11,9 +11,9 @@ namespace Dacb.CodeAnalysis.Binding
             Expression = expresion;
         }
         
+        public override TypeSymbol Type => Expression.Type;
         public VariableSymbol Variable { get; }
         public BoundExpression Expression { get; }
-        public override TypeSymbol Type => Expression.Type;
         public override BoundNodeKind Kind => BoundNodeKind.AssignmentExpression;
     }
 }
