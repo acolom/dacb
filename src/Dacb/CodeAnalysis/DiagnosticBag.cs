@@ -104,5 +104,11 @@ namespace Dacb.CodeAnalysis
             var message = $"Parameter '{parameterName}' requires a value of {expectedType} but was given of type {parameterType}.";
             Report(span, message);
         }
+
+        public void ReportExpressionMustHaveValue(TextSpan span)
+        {
+            var message = "Expression must have a value.";
+            Report(span, message);
+        }
     }
 }
