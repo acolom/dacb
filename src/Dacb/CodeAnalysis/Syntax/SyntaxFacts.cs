@@ -149,6 +149,8 @@ namespace Dacb.CodeAnalysis.Syntax
                     return  "{";
                 case SyntaxKind.CloseBraceToken: 
                     return  "}";
+                case SyntaxKind.CommaToken: 
+                    return  ",";
                 case SyntaxKind.IfKeyword:
                     return  "if";
                 case SyntaxKind.ElseKeyword:

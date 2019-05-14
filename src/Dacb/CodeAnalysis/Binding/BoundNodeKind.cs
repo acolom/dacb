@@ -21,6 +21,7 @@ namespace Dacb.CodeAnalysis.Binding
         UnaryExpression,
         LiteralExpression,
         BinaryExpression,
+        CallExpression,
     }
     
 }

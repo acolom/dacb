@@ -33,6 +33,7 @@ namespace Dacb.CodeAnalysis.Syntax
         OpenBraceToken,
         CloseBraceToken,
         IdentifierToken,
+        CommaToken,
        
         //keywords
         ElseKeyword,
@@ -65,6 +66,7 @@ namespace Dacb.CodeAnalysis.Syntax
         BinaryExpression,
         ParenthesizedExpression,
         AssignmentExpression,
+        CallExpression,
         
     }
 }
