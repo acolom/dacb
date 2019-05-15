@@ -35,20 +35,19 @@ namespace Dacb.CodeAnalysis.Binding
         {
             var stack = new Stack<BoundGlobalScope>();
 
-            while(previous != null)
+            while (previous != null)
             {
                 stack.Push(previous);
                 previous = previous.Previous;
             }
+            BoundScope parent = CreateRootScope();
 
-            BoundScope parent = null;
-
-            while(stack.Count > 0)
+            while (stack.Count > 0)
             {
                 previous = stack.Pop();
                 var scope = new BoundScope(parent);
-                foreach(var v in previous.Variables)
-                    scope.TryDeclare(v);
+                foreach (var v in previous.Variables)
+                    scope.TryDeclareVariable(v);
 
                 parent = scope;
 
@@ -56,6 +55,19 @@ namespace Dacb.CodeAnalysis.Binding
             //submission 3 -_> submission 2 -> submission -> 1
             return parent;
         }
+
+        private static BoundScope CreateRootScope()
+        {
+            var result = new BoundScope(null);
+
+            foreach(var function in BuiltinFunctions.GetAll())
+            {
+                result.TryDeclareFunction(function);
+            }
+
+            return result;
+        }
+
         public DiagnosticBag Diagnostics => _diagnostics;
 
         private BoundStatement BindStatement(StatementSyntax syntax)
@@ -208,7 +220,7 @@ namespace Dacb.CodeAnalysis.Binding
                 // el error ya se reporto asi que podriamos devolver un error expression
                 return new BoundErrorExpression();
             }
-            if (!_scope.TryLookup(name, out var variable))
+            if (!_scope.TryLookupVariable(name, out var variable))
             {
                 _diagnostics.ReportUndefinedName(syntax.IdentifierToken.Span, name);
                 return new BoundErrorExpression();
@@ -224,7 +236,7 @@ namespace Dacb.CodeAnalysis.Binding
             var boundExpression = BindExpression(syntax.Expression);
             
             
-            if (!_scope.TryLookup(name, out var variable))
+            if (!_scope.TryLookupVariable(name, out var variable))
             {
                 _diagnostics.ReportUndefinedName(syntax.IdentifierToken.Span, name);
                 return boundExpression;
@@ -287,10 +299,7 @@ namespace Dacb.CodeAnalysis.Binding
                 boundArguments.Add(boundArgument);
             }
 
-            var functions = BuiltinFunctions.GetAll();
-            
-            var function = functions.SingleOrDefault(f => f.Name == syntax.Identifier.Text);
-            if (function == null)
+            if (!_scope.TryLookupFunction(syntax.Identifier.Text, out var function))
             {
                 _diagnostics.ReportUndefinedFunction(syntax.Identifier.Span, syntax.Identifier.Text); 
                 return new BoundErrorExpression();
@@ -325,7 +334,7 @@ namespace Dacb.CodeAnalysis.Binding
 
             var variable = new VariableSymbol(name, isReadOnly, type);
            
-            if (!_scope.TryDeclare(variable))
+            if (!_scope.TryDeclareVariable(variable))
                 _diagnostics.ReportVariableAlreadyDeclared(identifier.Span, name);
           
             return variable;
