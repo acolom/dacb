@@ -22,8 +22,9 @@ namespace dacbCompiler
             foreach(var token in tokens)
             {
                 var isKeyword = token.Kind.ToString().EndsWith("Keyword");
-                var isNumber = token.Kind == SyntaxKind.NumberToken;
                 var isIdentifier = token.Kind == SyntaxKind.IdentifierToken;
+                var isNumber = token.Kind == SyntaxKind.NumberToken;
+                var isString = token.Kind == SyntaxKind.StringToken;
 
                 if (isKeyword)
                     Console.ForegroundColor = ConsoleColor.Blue;
@@ -31,6 +32,8 @@ namespace dacbCompiler
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                 else if (isNumber)
                     Console.ForegroundColor = ConsoleColor.Cyan;
+                else if (isString)
+                    Console.ForegroundColor = ConsoleColor.Magenta;
                 else
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                 
@@ -82,11 +85,14 @@ namespace dacbCompiler
 
             if (!result.Diagnostics.Any())
             {
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine(result.Value);
-                Console.ResetColor();
-
+                if (result.Value != null)
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine(result.Value);
+                    Console.ResetColor();
+                }
                 _previous = compilation;
+
             }
             else
             {

@@ -7,7 +7,4 @@ namespace Dacb.CodeAnalysis.Binding
     {
         public abstract TypeSymbol Type { get; }
     }
-
-
-    
 }

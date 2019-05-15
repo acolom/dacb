@@ -86,5 +86,29 @@ namespace Dacb.CodeAnalysis
             var message = $"Variable '{name}' is read-only and cannot be assigned to.";
             Report(span, message);
         }
+
+        public void ReportUndefinedFunction(TextSpan span, string name)
+        {
+            var message = $"Function '{name}' doesn't exist.";
+            Report(span, message);
+        }
+
+        public void ReportWrongArgumentCount(TextSpan span, string name, int expectedCount, int actualCount)
+        {
+            var message = $"Function '{name}' requires {expectedCount} but was given {actualCount}.";
+            Report(span, message);
+        }
+
+        public void ReportWrongArgumentType(TextSpan span,  string parameterName, TypeSymbol parameterType, TypeSymbol expectedType)
+        {
+            var message = $"Parameter '{parameterName}' requires a value of {expectedType} but was given of type {parameterType}.";
+            Report(span, message);
+        }
+
+        public void ReportExpressionMustHaveValue(TextSpan span)
+        {
+            var message = "Expression must have a value.";
+            Report(span, message);
+        }
     }
 }
