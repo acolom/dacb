@@ -124,21 +124,18 @@ namespace Dacb.CodeAnalysis.Lowering
 
             var continueLabel = GenerateLabel();
             var checkLabel = GenerateLabel();
-            var endLabel = GenerateLabel();
-            
+
             var goToCheck = new BoundGoToStatement(checkLabel);
             var continueLabelStatement = new BoundLabelStatement(continueLabel);
             var checkLabelStatement = new BoundLabelStatement(checkLabel);
             var goToTrue = new BoundConditionalGoToStatement(continueLabel, node.Condition);
-            var endLabelStatement = new BoundLabelStatement(endLabel);
 
             var result = new BoundBlockStatement(ImmutableArray.Create<BoundStatement>(
                 goToCheck,
                 continueLabelStatement,
                 node.Body,
                 checkLabelStatement,
-                goToTrue,
-                endLabelStatement
+                goToTrue
                 )
             );
             return RewriteStatement(result);
