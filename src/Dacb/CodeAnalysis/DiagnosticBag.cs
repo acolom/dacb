@@ -63,15 +63,25 @@ namespace Dacb.CodeAnalysis
             Report(span, message);
         }
 
+        public void ReportParameterAlreadyDeclared(TextSpan span, string parameterName)
+        {
+            var message = $"A parameter with the name '{parameterName}' already exists.";
+            Report(span, message);
+        }
         public void ReportUndefinedName(TextSpan span, string name)
         {
             var message = $"Variable '{name}' does not exists.";
             Report(span, message);
         }
 
-        public void ReportVariableAlreadyDeclared(TextSpan span, string name)
+        public void ReportUndefinedType(TextSpan span, string name)
         {
-            var message = $"Variable '{name}' is already declared.";
+            var message = $"Type '{name}' does not exists.";
+            Report(span, message);
+        }
+        public void ReportSymbolAlreadyDeclared(TextSpan span, string name)
+        {
+            var message = $"'{name}' is already declared.";
             Report(span, message);
         }
 
@@ -81,6 +91,11 @@ namespace Dacb.CodeAnalysis
             Report(span, message);
         }
 
+        public void ReportCannotConvertImplicitly(TextSpan span, TypeSymbol fromType, TypeSymbol toType)
+        {
+            var message = $"Cannot convert type '{fromType}' to type '{toType}'. An explicit conversion exists (are you missing a cast?)";
+            Report(span, message);
+        }
         public void ReportCannotAssign(TextSpan span, string name)
         {
             var message = $"Variable '{name}' is read-only and cannot be assigned to.";
@@ -108,6 +123,12 @@ namespace Dacb.CodeAnalysis
         public void ReportExpressionMustHaveValue(TextSpan span)
         {
             var message = "Expression must have a value.";
+            Report(span, message);
+        }
+
+        public void XXX_ReportFunctionsAreUnsuported(TextSpan span)
+        {
+            var message = "Functions that return values are not supported.";
             Report(span, message);
         }
     }

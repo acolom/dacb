@@ -76,6 +76,7 @@ namespace Dacb.Tests.CodeAnalysis
         [InlineData("{ var result = 0 for i = 0 to 10 result = result + i  result}", 55)]
         [InlineData("{ var a = 10 for i = 1 to (a = a -1) {} a }", 9)]
         [InlineData("{ var a = 11 var b = 2 var c = a % b c }", 1)]
+        [InlineData("{ var a = 0 do a = a + 1 while a < 10 a}", 10)]
         public void Evaluator_Computes_CorrectValues(string text, object expectedValue)
         {
             AssertValue(text, expectedValue);
@@ -96,7 +97,7 @@ namespace Dacb.Tests.CodeAnalysis
             ";
 
             var diagnostics = @"
-                Variable 'x' is already declared.
+                'x' is already declared.
             ";
 
             AssertDiagnostics(text, diagnostics);
@@ -226,7 +227,7 @@ namespace Dacb.Tests.CodeAnalysis
         [Fact]
         public void Evaluator_NameExpression_Reports_NoErrorForInsertedToken()
         {
-            var text = @"[]";
+            var text = @"1 + []";
 
             var diagnostics = @"
                 Unexpected token <EndOfFileToken>, expected <IdentifierToken>.
@@ -274,6 +275,22 @@ namespace Dacb.Tests.CodeAnalysis
 
             var diagnostics = @"
                 Cannot convert type 'bool' to type 'int'.
+            ";
+
+            AssertDiagnostics(text, diagnostics);
+        }
+
+        [Fact]
+        public void Evaluator_Variables_Can_Shadow_Functions()
+        {
+            var text = @"
+                {
+                    let print = 42
+                    [print](""print"")
+                }";
+
+            var diagnostics = @"
+                Function 'print' doesn't exist.
             ";
 
             AssertDiagnostics(text, diagnostics);

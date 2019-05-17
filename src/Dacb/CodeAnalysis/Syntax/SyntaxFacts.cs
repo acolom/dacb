@@ -54,12 +54,16 @@ namespace Dacb.CodeAnalysis.Syntax
         {
             switch(text)
             {
+                case "do":
+                    return SyntaxKind.DoKeyword;
                 case "else":
                     return SyntaxKind.ElseKeyword;
                 case "false":
                     return SyntaxKind.FalseKeyword;
                 case "for":
                     return SyntaxKind.ForKeyword;
+                case "function":
+                    return SyntaxKind.FunctionKeyword;
                 case "if":
                     return SyntaxKind.IfKeyword;
                 case "let":
@@ -149,16 +153,22 @@ namespace Dacb.CodeAnalysis.Syntax
                     return  "{";
                 case SyntaxKind.CloseBraceToken: 
                     return  "}";
+                case SyntaxKind.ColonToken: 
+                    return  ":";
                 case SyntaxKind.CommaToken: 
                     return  ",";
                 case SyntaxKind.IfKeyword:
                     return  "if";
                 case SyntaxKind.ElseKeyword:
                     return  "else";
-                 case SyntaxKind.WhileKeyword:
+                case SyntaxKind.DoKeyword:
+                    return  "do";
+                case SyntaxKind.WhileKeyword:
                     return  "while";
                 case SyntaxKind.ForKeyword:
                     return  "for";
+                case SyntaxKind.FunctionKeyword:
+                    return  "function";
                 case SyntaxKind.ToKeyword:
                     return  "to";
                 case SyntaxKind.TrueKeyword:

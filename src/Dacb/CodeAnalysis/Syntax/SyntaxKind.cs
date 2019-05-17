@@ -33,12 +33,15 @@ namespace Dacb.CodeAnalysis.Syntax
         OpenBraceToken,
         CloseBraceToken,
         IdentifierToken,
+        ColonToken,
         CommaToken,
        
         //keywords
+        DoKeyword,
         ElseKeyword,
         FalseKeyword,
         ForKeyword,
+        FunctionKeyword,
         IfKeyword,
         LetKeyword,
         ToKeyword,
@@ -49,7 +52,11 @@ namespace Dacb.CodeAnalysis.Syntax
         
         //Nodes
         CompilationUnit,
+        FunctionDeclaration,
+        GlobalStatement,
+        Parameter,
         ElseClause,
+        TypeClause,
 
         //Statements
         BlockStatement,
@@ -57,6 +64,7 @@ namespace Dacb.CodeAnalysis.Syntax
         ExpressionStatement,
         IfStatement,
         WhileStatement,
+        DoWhileStatement,
         ForStatement,
         
         //Expressions     

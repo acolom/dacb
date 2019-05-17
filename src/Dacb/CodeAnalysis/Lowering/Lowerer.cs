@@ -124,21 +124,45 @@ namespace Dacb.CodeAnalysis.Lowering
 
             var continueLabel = GenerateLabel();
             var checkLabel = GenerateLabel();
-            var endLabel = GenerateLabel();
-            
+
             var goToCheck = new BoundGoToStatement(checkLabel);
             var continueLabelStatement = new BoundLabelStatement(continueLabel);
             var checkLabelStatement = new BoundLabelStatement(checkLabel);
             var goToTrue = new BoundConditionalGoToStatement(continueLabel, node.Condition);
-            var endLabelStatement = new BoundLabelStatement(endLabel);
 
             var result = new BoundBlockStatement(ImmutableArray.Create<BoundStatement>(
                 goToCheck,
                 continueLabelStatement,
                 node.Body,
                 checkLabelStatement,
-                goToTrue,
-                endLabelStatement
+                goToTrue
+                )
+            );
+            return RewriteStatement(result);
+
+        }
+
+        protected override BoundStatement RewriteDoWhileStatement(BoundDoWhileStatement node)
+        {
+            // do
+            //    <body>
+            // while <condition>
+            // ------>
+            //
+            
+            // continue;
+            // <body>
+            // gotoTrue <condition> continue;
+
+            var continueLabel = GenerateLabel();
+            
+            var continueLabelStatement = new BoundLabelStatement(continueLabel);
+            var goToTrue = new BoundConditionalGoToStatement(continueLabel, node.Condition);
+
+            var result = new BoundBlockStatement(ImmutableArray.Create<BoundStatement>(
+                continueLabelStatement,
+                node.Body,
+                goToTrue
                 )
             );
             return RewriteStatement(result);
@@ -163,7 +187,7 @@ namespace Dacb.CodeAnalysis.Lowering
             var variableDeclaration = new BoundVariableDeclaration(node.Variable, node.LowerBound);
             var variableExpression = new BoundVariableExpression(node.Variable);
 
-            var upperBoundSymbol = new VariableSymbol("upperBound", true, TypeSymbol.Int);
+            var upperBoundSymbol = new LocalVariableSymbol("upperBound", true, TypeSymbol.Int);
             var upperBoundDeclaration = new BoundVariableDeclaration(upperBoundSymbol, node.UpperBound);
 
             var condition = new BoundBinaryExpression(

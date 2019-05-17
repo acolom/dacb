@@ -7,6 +7,7 @@ namespace Dacb.CodeAnalysis.Binding
         ExpressionStatement,
         IfStatement,
         WhileStatement,
+        DoWhileStatement,
         ForStatement,
         GoToStatement,
         LabelStatement,
@@ -22,7 +23,7 @@ namespace Dacb.CodeAnalysis.Binding
         LiteralExpression,
         BinaryExpression,
         CallExpression,
-        ConversionExpression,
+        ConversionExpression,       
     }
     
 }

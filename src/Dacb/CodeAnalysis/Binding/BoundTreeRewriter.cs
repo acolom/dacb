@@ -18,6 +18,8 @@ namespace Dacb.CodeAnalysis.Binding
                     return RewriteIfStatement((BoundIfStatement)node);
                 case BoundNodeKind.WhileStatement:
                     return RewriteWhileStatement((BoundWhileStatement)node);
+                case BoundNodeKind.DoWhileStatement:
+                    return RewriteDoWhileStatement((BoundDoWhileStatement)node);
                 case BoundNodeKind.ForStatement:
                     return RewriteForStatement((BoundForStatement)node);
                 case BoundNodeKind.LabelStatement:
@@ -94,6 +96,17 @@ namespace Dacb.CodeAnalysis.Binding
                 return node;
             
             return new BoundWhileStatement(node.Condition, body);    
+        }
+
+        protected virtual BoundStatement RewriteDoWhileStatement(BoundDoWhileStatement node)
+        {
+            var body = RewriteStatement(node.Body);
+            var condition = RewriteExpression(node.Condition);
+            
+            if (body == node.Body && condition == node.Condition)
+                return node;
+            
+            return new BoundDoWhileStatement(body, node.Condition);    
         }
 
         protected virtual BoundStatement RewriteForStatement(BoundForStatement node)
