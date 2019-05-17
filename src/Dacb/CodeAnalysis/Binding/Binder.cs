@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using Dacb.CodeAnalysis.Symbols;
 using Dacb.CodeAnalysis.Syntax;
+using Dacb.CodeAnalysis.Text;
 
 namespace Dacb.CodeAnalysis.Binding
 {
@@ -159,22 +160,14 @@ namespace Dacb.CodeAnalysis.Binding
 
         }
 
+        private BoundExpression BindExpression(ExpressionSyntax syntax, TypeSymbol targetType)
+        {
+            return BindConversion(syntax, targetType);
+        }
         private BoundStatement BindExpressionStatement(ExpressionStatementSyntax syntax)
         {
             var expression = BindExpression(syntax.Expression, canBeVoid: true);
             return new BoundExpressionStatement(expression);
-        }
-
-        private BoundExpression BindExpression(ExpressionSyntax syntax, TypeSymbol targetType)
-        {
-            var result  = BindExpression(syntax);
-            if (targetType != TypeSymbol.Error &&
-                result.Type != TypeSymbol.Error &&
-                result.Type != targetType)
-            {
-                _diagnostics.ReportCannotConvert(syntax.Span, result.Type, targetType);
-            }
-            return result;
         }
 
         private BoundExpression BindExpression(ExpressionSyntax syntax, bool canBeVoid = false)
@@ -253,17 +246,11 @@ namespace Dacb.CodeAnalysis.Binding
             }
 
             if (variable.IsReadOnly)
-            {
                 _diagnostics.ReportCannotAssign(syntax.EqualsToken.Span, name);
-                return boundExpression;
-            }
-            if (boundExpression.Type != variable.Type)            
-            {
-                _diagnostics.ReportCannotConvert(syntax.Expression.Span, boundExpression.Type, variable.Type);
-                return boundExpression;
-            }
 
-            return new BoundAssignmentExpression(variable, boundExpression);
+            var convertedExpression = BindConversion(syntax.Expression.Span, boundExpression, variable.Type);
+
+            return new BoundAssignmentExpression(variable, convertedExpression);
         }
 
         private BoundExpression BindUnaryExpression(UnaryExpressionSyntax syntax)
@@ -304,7 +291,7 @@ namespace Dacb.CodeAnalysis.Binding
         {
             // esta comprobacion nos permite hacer cosas del tipo int("2") string(2) bool(true)
             if (syntax.Arguments.Count == 1 && LookupType(syntax.Identifier.Text) is TypeSymbol type)
-                return BindConversion(type, syntax.Arguments[0]);
+                return BindConversion(syntax.Arguments[0], type);
 
             var boundArguments = ImmutableArray.CreateBuilder<BoundExpression>();
             
@@ -343,16 +330,28 @@ namespace Dacb.CodeAnalysis.Binding
 
         }
 
-        private BoundExpression BindConversion(TypeSymbol type, ExpressionSyntax syntax)
+        private BoundExpression BindConversion(ExpressionSyntax syntax, TypeSymbol type)
         {
             var expression = BindExpression(syntax);
+            return BindConversion(syntax.Span, expression, type);
+        }
+
+        private BoundExpression BindConversion(TextSpan diagnosticSpan, BoundExpression expression, TypeSymbol type )
+        {
             var conversion = Conversion.Classify(expression.Type, type);
 
             if (!conversion.Exists)
             {
-                _diagnostics.ReportCannotConvert(syntax.Span, expression.Type, type);
+                if (expression.Type != TypeSymbol.Error && type != TypeSymbol.Error)
+                {
+                    _diagnostics.ReportCannotConvert(diagnosticSpan, expression.Type, type);
+                }
+
                 return new BoundErrorExpression();
             }
+
+            if (conversion.IsIdentity)
+                return expression;
 
             return new BoundConversionExpression(type, expression);
         }
