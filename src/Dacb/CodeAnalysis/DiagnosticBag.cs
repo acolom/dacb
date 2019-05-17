@@ -68,7 +68,11 @@ namespace Dacb.CodeAnalysis
             var message = $"Variable '{name}' does not exists.";
             Report(span, message);
         }
-
+        public void ReportUndefinedType(TextSpan span, string name)
+        {
+            var message = $"Type '{name}' does not exists.";
+            Report(span, message);
+        }
         public void ReportVariableAlreadyDeclared(TextSpan span, string name)
         {
             var message = $"Variable '{name}' is already declared.";
@@ -81,6 +85,11 @@ namespace Dacb.CodeAnalysis
             Report(span, message);
         }
 
+        public void ReportCannotConvertImplicitly(TextSpan span, TypeSymbol fromType, TypeSymbol toType)
+        {
+            var message = $"Cannot convert type '{fromType}' to type '{toType}'. An explicit conversion exists (are you missing a cast?)";
+            Report(span, message);
+        }
         public void ReportCannotAssign(TextSpan span, string name)
         {
             var message = $"Variable '{name}' is read-only and cannot be assigned to.";

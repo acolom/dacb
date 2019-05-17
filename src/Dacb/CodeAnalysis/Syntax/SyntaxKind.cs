@@ -33,6 +33,7 @@ namespace Dacb.CodeAnalysis.Syntax
         OpenBraceToken,
         CloseBraceToken,
         IdentifierToken,
+        ColonToken,
         CommaToken,
        
         //keywords
@@ -51,6 +52,7 @@ namespace Dacb.CodeAnalysis.Syntax
         //Nodes
         CompilationUnit,
         ElseClause,
+        TypeClause,
 
         //Statements
         BlockStatement,
