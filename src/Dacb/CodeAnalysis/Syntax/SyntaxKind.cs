@@ -41,6 +41,7 @@ namespace Dacb.CodeAnalysis.Syntax
         ElseKeyword,
         FalseKeyword,
         ForKeyword,
+        FunctionKeyword,
         IfKeyword,
         LetKeyword,
         ToKeyword,
@@ -51,6 +52,9 @@ namespace Dacb.CodeAnalysis.Syntax
         
         //Nodes
         CompilationUnit,
+        FunctionDeclaration,
+        GlobalStatement,
+        Parameter,
         ElseClause,
         TypeClause,
 

@@ -63,19 +63,25 @@ namespace Dacb.CodeAnalysis
             Report(span, message);
         }
 
+        public void ReportParameterAlreadyDeclared(TextSpan span, string parameterName)
+        {
+            var message = $"A parameter with the name '{parameterName}' already exists.";
+            Report(span, message);
+        }
         public void ReportUndefinedName(TextSpan span, string name)
         {
             var message = $"Variable '{name}' does not exists.";
             Report(span, message);
         }
+
         public void ReportUndefinedType(TextSpan span, string name)
         {
             var message = $"Type '{name}' does not exists.";
             Report(span, message);
         }
-        public void ReportVariableAlreadyDeclared(TextSpan span, string name)
+        public void ReportSymbolAlreadyDeclared(TextSpan span, string name)
         {
-            var message = $"Variable '{name}' is already declared.";
+            var message = $"'{name}' is already declared.";
             Report(span, message);
         }
 
@@ -117,6 +123,12 @@ namespace Dacb.CodeAnalysis
         public void ReportExpressionMustHaveValue(TextSpan span)
         {
             var message = "Expression must have a value.";
+            Report(span, message);
+        }
+
+        public void XXX_ReportFunctionsAreUnsuported(TextSpan span)
+        {
+            var message = "Functions that return values are not supported.";
             Report(span, message);
         }
     }

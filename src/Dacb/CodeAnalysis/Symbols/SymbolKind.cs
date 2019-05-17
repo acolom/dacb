@@ -4,8 +4,8 @@ namespace Dacb.CodeAnalysis.Symbols
     {
         Function,
         Parameter,
-        Variable,
         Type,
-        
+        GlobalVariable,
+        LocalVariable,
     }
 }

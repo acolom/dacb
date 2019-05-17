@@ -62,6 +62,8 @@ namespace Dacb.CodeAnalysis.Syntax
                     return SyntaxKind.FalseKeyword;
                 case "for":
                     return SyntaxKind.ForKeyword;
+                case "function":
+                    return SyntaxKind.FunctionKeyword;
                 case "if":
                     return SyntaxKind.IfKeyword;
                 case "let":
@@ -165,6 +167,8 @@ namespace Dacb.CodeAnalysis.Syntax
                     return  "while";
                 case SyntaxKind.ForKeyword:
                     return  "for";
+                case SyntaxKind.FunctionKeyword:
+                    return  "function";
                 case SyntaxKind.ToKeyword:
                     return  "to";
                 case SyntaxKind.TrueKeyword:
