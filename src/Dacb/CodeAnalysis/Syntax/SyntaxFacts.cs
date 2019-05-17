@@ -54,6 +54,8 @@ namespace Dacb.CodeAnalysis.Syntax
         {
             switch(text)
             {
+                case "do":
+                    return SyntaxKind.DoKeyword;
                 case "else":
                     return SyntaxKind.ElseKeyword;
                 case "false":
@@ -155,7 +157,9 @@ namespace Dacb.CodeAnalysis.Syntax
                     return  "if";
                 case SyntaxKind.ElseKeyword:
                     return  "else";
-                 case SyntaxKind.WhileKeyword:
+                case SyntaxKind.DoKeyword:
+                    return  "do";
+                case SyntaxKind.WhileKeyword:
                     return  "while";
                 case SyntaxKind.ForKeyword:
                     return  "for";

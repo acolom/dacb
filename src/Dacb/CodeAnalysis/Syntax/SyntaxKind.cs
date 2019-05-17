@@ -36,6 +36,7 @@ namespace Dacb.CodeAnalysis.Syntax
         CommaToken,
        
         //keywords
+        DoKeyword,
         ElseKeyword,
         FalseKeyword,
         ForKeyword,
@@ -57,6 +58,7 @@ namespace Dacb.CodeAnalysis.Syntax
         ExpressionStatement,
         IfStatement,
         WhileStatement,
+        DoWhileStatement,
         ForStatement,
         
         //Expressions     

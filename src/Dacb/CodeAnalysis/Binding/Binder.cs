@@ -82,6 +82,8 @@ namespace Dacb.CodeAnalysis.Binding
                     return BindIfStatement((IfStatementSyntax)syntax);
                 case SyntaxKind.WhileStatement:
                     return BindWhileStatement((WhileStatementSyntax)syntax);
+                case SyntaxKind.DoWhileStatement:
+                    return BindDoWhileStatement((DoWhileStatementSyntax)syntax);
                 case SyntaxKind.ForStatement:
                     return BindForStatement((ForStatementSyntax)syntax);
                 case SyntaxKind.ExpressionStatement:
@@ -129,6 +131,14 @@ namespace Dacb.CodeAnalysis.Binding
             var condition = BindExpression(syntax.Condition, TypeSymbol.Bool);
             var bodyStatement = BindStatement(syntax.BodyStatement);
             return new BoundWhileStatement(condition, bodyStatement);
+        }
+
+        private BoundStatement BindDoWhileStatement(DoWhileStatementSyntax syntax)
+        {
+            var body = BindStatement(syntax.BodyStatement);
+            var condition = BindExpression(syntax.Condition, TypeSymbol.Bool);
+            
+            return new BoundDoWhileStatement(body, condition);
         }
 
         private BoundStatement BindForStatement(ForStatementSyntax syntax)

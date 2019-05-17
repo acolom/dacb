@@ -76,6 +76,7 @@ namespace Dacb.Tests.CodeAnalysis
         [InlineData("{ var result = 0 for i = 0 to 10 result = result + i  result}", 55)]
         [InlineData("{ var a = 10 for i = 1 to (a = a -1) {} a }", 9)]
         [InlineData("{ var a = 11 var b = 2 var c = a % b c }", 1)]
+        [InlineData("{ var a = 0 do a = a + 1 while a < 10 a}", 10)]
         public void Evaluator_Computes_CorrectValues(string text, object expectedValue)
         {
             AssertValue(text, expectedValue);
